@@ -1,0 +1,3485 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="marble">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ottaviano · Da Gaio Ottavio ad Augusto · Museo Digitale Interattivo</title>
+<meta name="description" content="Dalla morte di Cesare alla nascita del Principato: un'esperienza immersiva tra affreschi, statue interattive, monete 3D e video-simulazioni tattiche a 60fps delle battaglie di Mutina, Filippi e Azio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   1. DESIGN TOKENS & DYNAMIC THEMES (ADDIO SFONDO NERO STATICO)
+   ========================================================================== */
+:root, [data-theme="marble"] {
+  --bg: #f6f1e7;
+  --bg-2: #ede4d3;
+  --panel: rgba(255, 252, 245, 0.88);
+  --panel-solid: #faf6ee;
+  --panel-2: rgba(242, 233, 216, 0.92);
+  --ink: #1a1512;
+  --txt: #3b3129;
+  --muted: #6e5f51;
+  --gold: #a6761e;
+  --gold-l: #c89632;
+  --gold-glow: rgba(198, 146, 44, 0.25);
+  --crimson: #9e2a2b;
+  --crimson-l: #b83a3b;
+  --terra: #b85134;
+  --sea: #1d5c63;
+  --purple: #5e3a6e;
+  --green: #3b6e4c;
+  --line: rgba(166, 118, 30, 0.22);
+  --line-2: rgba(158, 42, 43, 0.38);
+  --shadow: 0 20px 50px -15px rgba(26, 21, 18, 0.12), 0 4px 16px -2px rgba(26, 21, 18, 0.06);
+  --shadow-lg: 0 30px 70px -18px rgba(26, 21, 18, 0.22);
+  --aura-1: rgba(158, 42, 43, 0.11);
+  --aura-2: rgba(200, 150, 50, 0.14);
+  --aura-3: rgba(29, 92, 99, 0.09);
+  --nav-bg: rgba(246, 241, 231, 0.86);
+  --badge-bg: rgba(158, 42, 43, 0.09);
+}
+
+[data-theme="pompeii"] {
+  --bg: #241311;
+  --bg-2: #311a17;
+  --panel: rgba(48, 25, 22, 0.86);
+  --panel-solid: #2d1815;
+  --panel-2: rgba(62, 32, 28, 0.92);
+  --ink: #fbf2e3;
+  --txt: #e4d2bc;
+  --muted: #b39b82;
+  --gold: #dfb15b;
+  --gold-l: #f6cf7e;
+  --gold-glow: rgba(246, 207, 126, 0.26);
+  --crimson: #d94e3f;
+  --crimson-l: #f06454;
+  --terra: #e07a5f;
+  --sea: #4ea8b4;
+  --purple: #b589d6;
+  --green: #72b085;
+  --line: rgba(223, 177, 91, 0.25);
+  --line-2: rgba(223, 177, 91, 0.52);
+  --shadow: 0 22px 55px -15px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 32px 74px -18px rgba(0, 0, 0, 0.72);
+  --aura-1: rgba(217, 78, 63, 0.22);
+  --aura-2: rgba(223, 177, 91, 0.16);
+  --aura-3: rgba(94, 58, 110, 0.18);
+  --nav-bg: rgba(36, 19, 17, 0.88);
+  --badge-bg: rgba(217, 78, 63, 0.18);
+}
+
+[data-theme="arapacis"] {
+  --bg: #0d1520;
+  --bg-2: #131f30;
+  --panel: rgba(20, 32, 48, 0.85);
+  --panel-solid: #152234;
+  --panel-2: rgba(26, 42, 62, 0.92);
+  --ink: #f4efe6;
+  --txt: #cbd5e1;
+  --muted: #8ea0b8;
+  --gold: #d4a84f;
+  --gold-l: #f3cc7a;
+  --gold-glow: rgba(212, 168, 79, 0.25);
+  --crimson: #e05a47;
+  --crimson-l: #f27360;
+  --terra: #d97f54;
+  --sea: #4bc0c8;
+  --purple: #a78bfa;
+  --green: #68b88e;
+  --line: rgba(212, 168, 79, 0.24);
+  --line-2: rgba(212, 168, 79, 0.52);
+  --shadow: 0 22px 55px -15px rgba(3, 7, 14, 0.65);
+  --shadow-lg: 0 32px 74px -18px rgba(3, 7, 14, 0.82);
+  --aura-1: rgba(75, 192, 200, 0.15);
+  --aura-2: rgba(212, 168, 79, 0.15);
+  --aura-3: rgba(167, 139, 250, 0.14);
+  --nav-bg: rgba(13, 21, 32, 0.88);
+  --badge-bg: rgba(212, 168, 79, 0.16);
+}
+
+:root {
+  --sans: 'Cinzel', Georgia, serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --max: 1280px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--txt);
+  font: 20px/1.72 var(--serif);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background-color 0.65s var(--ease), color 0.45s var(--ease);
+}
+
+/* Ambient Dynamic Aura + Subtle Paper/Marble Texture */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 650px at var(--mx, 25%) var(--my, 20%), var(--aura-1), transparent 70%),
+    radial-gradient(850px 700px at 85% 25%, var(--aura-2), transparent 68%),
+    radial-gradient(900px 650px at 50% 90%, var(--aura-3), transparent 70%);
+  transition: background 0.9s var(--ease);
+}
+.ambient-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background-image:
+    radial-gradient(rgba(166, 118, 30, 0.14) 1px, transparent 1px),
+    radial-gradient(rgba(158, 42, 43, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px, 54px 54px;
+  background-position: 0 0, 18px 18px;
+}
+
+#dust-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+::selection { background: var(--crimson); color: #fff; }
+:focus-visible { outline: 2px solid var(--crimson); outline-offset: 3px; }
+img { max-width: 100%; display: block; }
+a { color: var(--crimson); text-decoration-color: var(--line-2); text-underline-offset: 3px; transition: color 0.25s; }
+a:hover { color: var(--gold); }
+strong, b { color: var(--ink); font-weight: 700; }
+em, i { font-style: italic; }
+button { font: inherit; color: inherit; }
+
+/* ==========================================================================
+   2. PRELOADER CINEMATOGRAFICO & CURSORE MAGNETICO
+   ========================================================================== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #16110e;
+  color: #f6f1e7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.7s var(--ease-out), visibility 0.7s;
+}
+.preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader svg { width: 96px; height: 96px; stroke: #d4a338; fill: none; margin-bottom: 18px; filter: drop-shadow(0 0 18px rgba(212,163,56,0.35)); }
+.preloader-yr { font: 700 clamp(28px, 5vw, 48px)/1 var(--sans); letter-spacing: 0.18em; color: #f6f1e7; }
+.preloader-sub { font: 500 10px/1.6 var(--mono); letter-spacing: 0.34em; text-transform: uppercase; color: #d4a338; margin-top: 10px; }
+.preloader-bar { width: 200px; height: 2px; background: rgba(212,163,56,0.2); margin-top: 22px; overflow: hidden; border-radius: 2px; }
+.preloader-bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, #9e2a2b, #d4a338); transition: width 0.15s linear; }
+
+.cursor-ring, .cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9990;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+@media (pointer: fine) {
+  .cursor-ring {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    border: 1.5px solid var(--crimson);
+    border-radius: 999px;
+    transition: width 0.28s var(--ease-out), height 0.28s var(--ease-out), background-color 0.28s, border-color 0.28s;
+  }
+  .cursor-ring span {
+    font: 600 8px/1 var(--mono);
+    letter-spacing: 0.14em;
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .cursor-ring.active {
+    width: 78px; height: 78px;
+    background: rgba(158, 42, 43, 0.92);
+    border-color: var(--gold-l);
+    box-shadow: 0 8px 25px rgba(158, 42, 43, 0.35);
+  }
+  .cursor-ring.active span { opacity: 1; transform: scale(1); }
+  .cursor-dot {
+    display: block;
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+}
+
+/* ==========================================================================
+   3. LAYOUT, TYPOGRAPHY & TOP NAVIGATION BAR
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: clamp(18px, 4vw, 48px);
+  position: relative;
+  z-index: 2;
+}
+.mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: var(--badge-bg);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  margin: 0 0 18px;
+}
+.eyebrow::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--crimson);
+  box-shadow: 0 0 8px var(--crimson);
+}
+h2 {
+  font: 700 clamp(30px, 4.3vw, 54px)/1.08 var(--sans);
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin: 0 0 0.35em;
+}
+h3 {
+  font: 700 13px/1.45 var(--sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin: 0 0 10px;
+}
+
+.top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 66px;
+  z-index: 80;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s;
+}
+.top-in {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+.brand {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-seal {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--crimson), var(--gold));
+  color: #fff;
+  display: inline-grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(158, 42, 43, 0.3);
+}
+.brand span { color: var(--crimson); font-weight: 600; }
+
+.navlinks {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.navlinks::-webkit-scrollbar { display: none; }
+.navlinks a {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: all 0.25s;
+}
+.navlinks a:hover { color: var(--ink); background: var(--badge-bg); }
+.navlinks a.on {
+  color: #fff;
+  background: var(--crimson);
+  box-shadow: 0 4px 12px rgba(158, 42, 43, 0.28);
+}
+
+.theme-switch {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--panel-2);
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.theme-btn {
+  border: 0;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.25s;
+}
+.theme-btn i {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.theme-btn.active {
+  background: var(--panel-solid);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.prog {
+  position: absolute;
+  left: 0; bottom: -1px;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold-l), var(--sea));
+  width: 0;
+}
+
+/* ==========================================================================
+   4. HERO SECTION & INTERACTIVE STATUE HOTSPOTS
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  padding-top: 66px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding-block: clamp(28px, 5vw, 60px);
+}
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: var(--badge-bg);
+  border: 1px solid var(--line-2);
+  padding: 7px 16px;
+  border-radius: 999px;
+  margin-bottom: 22px;
+}
+h1 {
+  font-family: var(--sans);
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  font-size: clamp(48px, 7.8vw, 118px);
+}
+h1 .two {
+  display: block;
+  background: linear-gradient(120deg, var(--crimson), var(--gold), var(--crimson-l));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 0.78em;
+  letter-spacing: 0.06em;
+  margin-top: 0.08em;
+}
+.hero-lead {
+  margin: 26px 0 30px;
+  max-width: 48ch;
+  font-size: clamp(19px, 2vw, 23px);
+  line-height: 1.58;
+  color: var(--txt);
+}
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 34px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: 1.5px solid var(--crimson);
+  background: var(--crimson);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -6px rgba(158, 42, 43, 0.45);
+  transition: all 0.3s var(--ease);
+}
+.btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #14110c;
+  transform: translateY(-2px);
+}
+.btn.ghost {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--line-2);
+  box-shadow: var(--shadow);
+}
+.btn.ghost:hover {
+  background: var(--crimson);
+  color: #fff;
+  border-color: var(--crimson);
+}
+.btn svg { width: 15px; height: 15px; flex: none; }
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+.hero-meta div span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.hero-meta div b {
+  font: 600 15px/1.3 var(--mono);
+  color: var(--ink);
+}
+
+/* Interactive Statue Showcase */
+.hero-showcase {
+  position: relative;
+  border-radius: 22px;
+  background: linear-gradient(155deg, rgba(158, 42, 43, 0.14), rgba(166, 118, 30, 0.22));
+  border: 1.5px solid var(--line-2);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  max-height: 670px;
+  margin-inline: auto;
+  width: 100%;
+}
+.hero-showcase img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 14%;
+  transition: transform 0.9s var(--ease);
+}
+.hero-showcase:hover img { transform: scale(1.025); }
+.hero-showcase::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16,12,10,0.08) 0%, transparent 45%, rgba(16,12,10,0.78) 100%);
+  pointer-events: none;
+}
+.showcase-badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  z-index: 4;
+  background: rgba(20, 16, 13, 0.82);
+  backdrop-filter: blur(10px);
+  color: #f6f1e7;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 163, 56, 0.45);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.showcase-badge i {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #f0d48a;
+  animation: pulseDot 1.8s infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.4; }
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 5;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--crimson);
+  color: #fff;
+  border: 2px solid #f6cf7e;
+  font: 700 12px/1 var(--mono);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 0 rgba(158, 42, 43, 0.7);
+  animation: hsPulse 2.2s infinite;
+  transition: transform 0.25s, background 0.25s;
+}
+.hotspot:hover, .hotspot.active {
+  background: var(--gold);
+  color: #16120e;
+  transform: translate(-50%, -50%) scale(1.18);
+}
+@keyframes hsPulse {
+  0% { box-shadow: 0 0 0 0 rgba(212, 163, 56, 0.75); }
+  70% { box-shadow: 0 0 0 14px rgba(212, 163, 56, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 163, 56, 0); }
+}
+.hotspot-card {
+  position: absolute;
+  left: 16px; right: 16px; bottom: 16px;
+  z-index: 6;
+  background: rgba(20, 16, 13, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 163, 56, 0.5);
+  border-radius: 14px;
+  padding: 15px 18px;
+  color: #f6f1e7;
+  transition: all 0.35s var(--ease);
+}
+.hotspot-card b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f6cf7e;
+  margin-bottom: 4px;
+}
+.hotspot-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.48;
+  color: #e8dcc8;
+}
+
+/* Epigraphic Marquee */
+.marquee {
+  border-block: 1px solid var(--line);
+  background: var(--panel-2);
+  padding: 11px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 3;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marqueeScroll 38s linear infinite;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  color: var(--muted);
+}
+.marquee-track span { color: var(--crimson); margin-inline: 22px; }
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   5. SECTIONS, QUICK FACTS & INTERACTIVE CIVIL WARS TIMELINE
+   ========================================================================== */
+.sec {
+  padding: clamp(64px, 8vw, 116px) 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.sec-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: end;
+  margin-bottom: clamp(32px, 5vw, 54px);
+}
+.sec-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.fact-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.fact-card:hover { transform: translateY(-4px); border-color: var(--crimson); }
+.fact-thumb {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--line-2);
+  flex-shrink: 0;
+}
+.fact-card span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin-bottom: 4px;
+}
+.fact-card b {
+  font: 600 15px/1.35 var(--mono);
+  color: var(--ink);
+}
+.fact-card b small {
+  display: block;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* Cards & Interactive Charts */
+.card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--panel);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  margin: clamp(28px, 4vw, 44px) 0;
+  overflow: hidden;
+}
+.card-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--line);
+}
+.card-head h4 {
+  margin: 0;
+  font: 700 13px/1.4 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.card-head span {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.card-body { padding: 22px 22px 16px; }
+.card-foot {
+  padding: 14px 24px;
+  border-top: 1px solid var(--line);
+  background: var(--panel-2);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ax { stroke: var(--line-2); stroke-width: 1.5; }
+.gl { stroke: var(--line); stroke-width: 1; }
+.tx { font: 500 11px var(--mono); fill: var(--muted); letter-spacing: 0.06em; }
+.tx.b { fill: var(--ink); font-weight: 700; }
+.tx.g { fill: var(--crimson); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* Civil War Node Preview Card */
+.civil-preview {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 20px;
+  align-items: center;
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
+}
+.civil-preview img {
+  width: 100%;
+  height: 125px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+}
+.civil-preview .cp-yr {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.civil-preview h5 {
+  margin: 4px 0 6px;
+  font: 700 20px/1.2 var(--sans);
+  color: var(--ink);
+}
+.civil-preview p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--txt);
+}
+
+/* ==========================================================================
+   6. CHAPTERS & ILLUSTRATED NARRATIVE BLOCKS (IMMAGINI OVUNQUE)
+   ========================================================================== */
+.ch {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: clamp(24px, 4.5vw, 60px);
+  padding: clamp(52px, 7vw, 90px) 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.ch:first-child { border-top: 0; }
+.ch-aside {
+  position: sticky;
+  top: 94px;
+  align-self: start;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.ch-num {
+  font: 800 clamp(52px, 6vw, 78px)/0.85 var(--sans);
+  background: linear-gradient(135deg, var(--crimson), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ch-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--crimson);
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+.ch-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 6px;
+  line-height: 1.7;
+}
+.ch-emblem {
+  margin-top: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 16 / 10;
+}
+.ch-emblem img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: transform 0.5s;
+}
+.ch-emblem:hover img { transform: scale(1.06); }
+
+.ch-sub {
+  font: italic 600 clamp(21px, 2.5vw, 28px)/1.38 var(--serif);
+  color: var(--gold);
+  margin: 0 0 clamp(26px, 3.5vw, 38px);
+}
+
+/* Every narrative block has an integrated historical image card */
+.blk {
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  gap: 24px;
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin: 0 0 22px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.blk:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.blk p { margin: 0; font-size: 19.5px; line-height: 1.68; }
+.blk-media {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  cursor: zoom-in;
+  position: relative;
+}
+.blk-media img {
+  width: 100%;
+  height: 142px;
+  object-fit: cover;
+  object-position: 50% 25%;
+  transition: transform 0.6s var(--ease);
+}
+.blk-media:hover img { transform: scale(1.06); }
+.blk-media span {
+  display: block;
+  padding: 6px 9px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--panel-2);
+  border-top: 1px solid var(--line);
+  line-height: 1.4;
+}
+
+.quote {
+  margin: 28px 0;
+  padding: 24px 28px;
+  border-left: 4px solid var(--crimson);
+  background: linear-gradient(90deg, var(--badge-bg), transparent);
+  border-radius: 0 16px 16px 0;
+  font: italic 600 clamp(20px, 2.3vw, 25px)/1.48 var(--serif);
+  color: var(--ink);
+}
+.quote cite {
+  display: block;
+  margin-top: 10px;
+  font: 600 10px/1.6 var(--mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  font-style: normal;
+}
+
+/* Large Figures */
+.fig { margin: 32px 0; }
+.fig .frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1.5px solid var(--line-2);
+  background: var(--bg-2);
+  box-shadow: var(--shadow-lg);
+  cursor: zoom-in;
+}
+.fig img {
+  width: 100%;
+  height: auto;
+  max-height: min(70vh, 560px);
+  object-fit: cover;
+  object-position: 50% 22%;
+  transition: transform 0.9s var(--ease);
+}
+.fig:hover img { transform: scale(1.025); }
+.fig figcaption {
+  display: flex;
+  gap: 10px 20px;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 10px;
+  padding: 0 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fig figcaption b { color: var(--crimson); font-weight: 700; }
+
+/* Metrics */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+.metrics div {
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.metrics div::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
+}
+.metrics b {
+  display: block;
+  font: 700 clamp(26px, 3.2vw, 38px)/1.05 var(--mono);
+  color: var(--crimson);
+}
+.metrics b small {
+  font-size: 0.45em;
+  color: var(--gold);
+  margin-left: 4px;
+}
+.metrics span {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   7. VIDEO-TACTICAL BATTLE ENGINE (60FPS CANVAS DOCUMENTARY PLAYER)
+   ========================================================================== */
+.tactical-player {
+  margin: 38px 0;
+  border-radius: 20px;
+  border: 2px solid var(--line-2);
+  background: #13110f;
+  color: #f5efe4;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.tp-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  background: linear-gradient(90deg, #1d1714, #281c17);
+  border-bottom: 1px solid rgba(212, 163, 56, 0.28);
+}
+.tp-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tp-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(217, 78, 63, 0.22);
+  border: 1px solid #e05a47;
+  font: 600 9px/1 var(--mono);
+  letter-spacing: 0.18em;
+  color: #ff8575;
+  text-transform: uppercase;
+}
+.tp-rec i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #ff5640;
+  animation: pulseDot 1.2s infinite;
+}
+.tp-header h4 {
+  margin: 0;
+  font: 700 14px/1.3 var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f6f1e7;
+}
+.tp-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f0d48a;
+}
+
+.tp-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0e0c0a;
+  overflow: hidden;
+  cursor: pointer;
+}
+.tp-stage canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.tp-bigplay {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 78px; height: 78px;
+  border-radius: 50%;
+  background: rgba(158, 42, 43, 0.9);
+  border: 2px solid #f6cf7e;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.65);
+  transition: transform 0.25s, opacity 0.3s, background 0.25s;
+  z-index: 5;
+}
+.tp-bigplay:hover { transform: translate(-50%, -50%) scale(1.1); background: #b83a3b; }
+.tp-bigplay.playing { opacity: 0; pointer-events: none; }
+.tp-bigplay svg { width: 28px; height: 28px; fill: currentColor; margin-left: 3px; }
+
+/* HUD Force Bars & Subtitle Overlay inside Video */
+.tp-hud {
+  position: absolute;
+  top: 14px; left: 16px; right: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  pointer-events: none;
+  z-index: 4;
+}
+.tp-side {
+  background: rgba(14, 12, 10, 0.78);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 163, 56, 0.32);
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 195px;
+}
+.tp-side-top {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.tp-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.tp-bar i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transition: width 0.3s linear;
+}
+.tp-subtitles {
+  position: absolute;
+  left: 20px; right: 20px; bottom: 14px;
+  z-index: 4;
+  pointer-events: none;
+  text-align: center;
+}
+.tp-sub-box {
+  display: inline-block;
+  max-width: 78ch;
+  background: rgba(12, 10, 8, 0.86);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 163, 56, 0.4);
+  border-radius: 10px;
+  padding: 10px 18px;
+}
+.tp-sub-box b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f6cf7e;
+  margin-bottom: 3px;
+}
+.tp-sub-box p {
+  margin: 0;
+  font: italic 500 17px/1.42 var(--serif);
+  color: #f6f1e7;
+}
+
+/* Video Controls & Timeline Scrubber */
+.tp-controls {
+  padding: 14px 20px 16px;
+  background: #181411;
+  border-top: 1px solid rgba(212, 163, 56, 0.25);
+}
+.tp-timeline {
+  position: relative;
+  height: 10px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+.tp-progress {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, #d94e3f, #f6cf7e);
+  border-radius: 999px;
+  width: 0%;
+}
+.tp-marker {
+  position: absolute;
+  top: -3px;
+  width: 4px; height: 16px;
+  background: #f6f1e7;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+.tp-bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.tp-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212, 163, 56, 0.35);
+  color: #f6f1e7;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tp-btn:hover, .tp-btn.on {
+  background: #d94e3f;
+  border-color: #f6cf7e;
+  color: #fff;
+}
+.tp-phases {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+.tp-phase-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(212,163,56,0.28);
+  color: #cbbba2;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.tp-phase-btn.active {
+  background: #d4a338;
+  color: #14110d;
+  font-weight: 700;
+}
+.tp-time {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: #f6cf7e;
+  margin-inline: 6px;
+}
+
+/* ==========================================================================
+   8. 3D NUMISMATIC COIN LAB ("MONETE & PROPAGANDA")
+   ========================================================================== */
+.coins-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 28px;
+}
+.coin-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.coin-stage {
+  perspective: 1000px;
+  height: 190px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+.coin-disc {
+  width: 164px; height: 164px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.coin-card.flipped .coin-disc { transform: rotateY(180deg); }
+.coin-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--gold);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.28), inset 0 0 18px rgba(212,163,56,0.45);
+  background: radial-gradient(circle at 30% 30%, #f5e6c8, #b38736 75%, #6e4f16);
+}
+.coin-face img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.coin-back {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  background: radial-gradient(circle at 35% 30%, #3a2b1c, #1a130c 85%);
+  color: #f6cf7e;
+}
+.coin-back b {
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+}
+.coin-back span {
+  font-size: 13px;
+  line-height: 1.35;
+  color: #e6d5b8;
+}
+.coin-meta {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.coin-card h4 {
+  margin: 6px 0 8px;
+  font: 700 16px/1.3 var(--sans);
+  color: var(--ink);
+}
+.coin-card p {
+  margin: 0 0 14px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   9. GALLERY, PROTAGONISTS, FLASHCARDS, QUIZ & GLOSSARY
+   ========================================================================== */
+.gal {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+.gal figure {
+  margin: 0;
+  grid-column: span 4;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+  background: var(--bg-2);
+  box-shadow: var(--shadow);
+}
+.gal figure:first-child, .gal figure:nth-child(2) { grid-column: span 6; }
+.gal figure img {
+  width: 100%; height: 100%;
+  aspect-ratio: 1.18;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+.gal figure:hover img { transform: scale(1.05); }
+.gal figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 28px 16px 12px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fbf5e9;
+  background: linear-gradient(0deg, rgba(16, 12, 10, 0.92), transparent);
+}
+
+.cast {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  gap: 20px;
+}
+.person {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+  padding: 0 0 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.person:hover { transform: translateY(-5px); border-color: var(--crimson); }
+.person .ph {
+  aspect-ratio: 1.08;
+  overflow: hidden;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+  cursor: zoom-in;
+}
+.person img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+.person:hover img { transform: scale(1.05); }
+.person h4 {
+  margin: 16px 18px 4px;
+  font: 700 15px/1.35 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.person .role {
+  display: block;
+  margin: 0 18px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.person p {
+  margin: 10px 18px 0;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--txt);
+}
+
+/* Flashcards */
+.deckwrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: clamp(20px, 4vw, 44px);
+  align-items: start;
+}
+.deck { perspective: 1800px; min-height: 350px; position: relative; }
+.fc {
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transform-style: preserve-3d;
+  transition: transform 0.75s var(--ease);
+}
+.fc.flip { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1.5px solid var(--line-2);
+  border-radius: 20px;
+  background: var(--panel-solid);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(22px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.fc-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(155deg, var(--panel-solid), var(--bg-2));
+  border-color: var(--gold);
+}
+.fc-face .n {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  display: flex;
+  justify-content: space-between;
+}
+.fc-body-row {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 20px;
+  align-items: center;
+  margin: 16px 0;
+}
+.fc-thumb {
+  width: 120px; height: 120px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid var(--line-2);
+}
+.fc-face .q {
+  font: 700 clamp(20px, 2.5vw, 28px)/1.3 var(--sans);
+  color: var(--ink);
+}
+.fc-face .a {
+  font: 500 clamp(18px, 2.1vw, 22px)/1.55 var(--serif);
+  color: var(--txt);
+}
+.fc-face .hint {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.deck-ctrl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 22px;
+}
+.deck-ctrl .count {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--crimson);
+  margin-left: auto;
+}
+.pips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.pips i { width: 18px; height: 4px; border-radius: 2px; background: var(--line); cursor: pointer; }
+.pips i.on { background: var(--crimson); }
+.kbd {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--line-2);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--crimson);
+}
+
+/* Quiz */
+.quiz {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: clamp(22px, 3.5vw, 38px);
+}
+.q-block + .q-block {
+  margin-top: 26px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+}
+.q-block h4 {
+  font: 600 clamp(19px, 2.2vw, 23px)/1.42 var(--serif);
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.q-block h4 span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fff;
+  background: var(--crimson);
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.opts { display: grid; gap: 9px; }
+.opt {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.22s;
+  font: 500 17.5px/1.45 var(--serif);
+  color: var(--txt);
+}
+.opt:hover:not(.done) {
+  border-color: var(--crimson);
+  transform: translateX(4px);
+}
+.opt i {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--crimson);
+  padding-top: 2px;
+  font-style: normal;
+}
+.opt.ok {
+  border-color: var(--green);
+  background: rgba(59, 110, 76, 0.14);
+  color: var(--ink);
+  font-weight: 600;
+}
+.opt.no {
+  border-color: var(--crimson);
+  background: rgba(158, 42, 43, 0.12);
+}
+.opt.done { cursor: default; }
+.opt .mk {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.exp {
+  margin: 10px 0 0;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--txt);
+  border-left: 3px solid var(--gold);
+  background: var(--panel-2);
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+  display: none;
+}
+.exp.show { display: block; }
+.quiz-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.score {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.bar {
+  flex: 1;
+  min-width: 140px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
+  transition: width 0.5s var(--ease);
+}
+
+/* Glossary */
+.gloss-search {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: var(--panel-solid);
+  color: var(--ink);
+  font: 500 15px var(--mono);
+  margin-bottom: 20px;
+}
+.gloss {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+}
+details {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow);
+}
+details summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  font: 700 18px/1.4 var(--serif);
+  color: var(--ink);
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after {
+  content: "+";
+  font-family: var(--mono);
+  color: var(--crimson);
+  font-size: 16px;
+  font-weight: 700;
+}
+details[open] summary::after { content: "−"; }
+details p {
+  margin: 10px 0 0;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--txt);
+}
+
+/* Lightbox */
+dialog.lb {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: min(1100px, 94vw);
+  max-height: 92vh;
+  color: #f6f1e7;
+}
+dialog.lb::backdrop { background: rgba(10, 8, 7, 0.92); backdrop-filter: blur(8px); }
+dialog.lb img {
+  max-height: 78vh;
+  width: auto;
+  margin-inline: auto;
+  border-radius: 14px;
+  border: 2px solid #d4a338;
+}
+dialog.lb p {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #e6d5b8;
+  margin: 12px 0 0;
+  text-align: center;
+}
+dialog.lb button {
+  position: absolute;
+  top: -36px; right: 0;
+  background: #9e2a2b;
+  border: 1px solid #f6cf7e;
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--line);
+  padding: clamp(60px, 8vw, 100px) 0 60px;
+  text-align: center;
+  background: var(--panel-2);
+  position: relative;
+  z-index: 2;
+}
+footer .sig {
+  font: 800 clamp(42px, 9vw, 124px)/1 var(--sans);
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--crimson), var(--gold), var(--sea));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+footer .motto {
+  font: italic 600 clamp(19px, 2.4vw, 26px)/1.4 var(--serif);
+  color: var(--ink);
+  margin: 14px 0 0;
+}
+footer .src {
+  margin-top: 36px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  line-height: 2;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Reveal Animation */
+.rv {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.rv.in { opacity: 1; transform: none; }
+
+/* Responsive Breakpoints */
+@media (max-width: 1060px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-showcase { max-width: 540px; order: -1; }
+  .ch { grid-template-columns: 1fr; }
+  .ch-aside { position: static; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .ch-emblem { width: 140px; margin-top: 0; margin-left: auto; }
+  .coins-grid { grid-template-columns: repeat(2, 1fr); }
+  .deckwrap { grid-template-columns: 1fr; }
+}
+@media (max-width: 820px) {
+  .sec-head { grid-template-columns: 1fr; }
+  .facts, .metrics { grid-template-columns: 1fr 1fr; }
+  .navlinks { display: none; }
+  .blk { grid-template-columns: 1fr; }
+  .blk-media img { height: 190px; }
+  .civil-preview { grid-template-columns: 1fr; }
+  .gloss { grid-template-columns: 1fr; }
+  .gal figure, .gal figure:first-child, .gal figure:nth-child(2) { grid-column: span 6; }
+  .tp-hud { position: static; padding: 10px; background: #14110e; }
+  .tp-subtitles { position: static; padding: 8px 12px; background: #14110e; }
+}
+@media (max-width: 560px) {
+  .facts, .metrics, .coins-grid { grid-template-columns: 1fr; }
+  .hero-meta { grid-template-columns: 1fr; }
+  .gal figure, .gal figure:first-child, .gal figure:nth-child(2) { grid-column: span 12; }
+  .fc-body-row { grid-template-columns: 1fr; }
+  .fc-thumb { display: none; }
+  .theme-btn span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER CINEMATOGRAFICO -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <path d="M50 82 C26 75 16 52 22 26 C26 42 36 60 50 72 C64 60 74 42 78 26 C84 52 74 75 50 82 Z" stroke-width="2"/>
+    <circle cx="50" cy="20" r="4" fill="#d4a338"/>
+  </svg>
+  <div class="preloader-yr" id="pre-yr">63 a.C.</div>
+  <div class="preloader-sub">Aedes Digitalis · Imperator Caesar Augustus</div>
+  <div class="preloader-bar"><i id="pre-bar"></i></div>
+</div>
+
+<!-- CURSORE MAGNETICO -->
+<div class="cursor-ring" id="c-ring"><span id="c-lbl">ESPLORA</span></div>
+<div class="cursor-dot" id="c-dot"></div>
+
+<!-- SFONDO DINAMICO E PARTICELLE DORATE -->
+<div class="ambient-bg" id="ambient"></div>
+<canvas id="dust-canvas" aria-hidden="true"></canvas>
+
+<!-- TOP BAR CON SELETTORE TEMA -->
+<div class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top">
+      <i class="brand-seal">SPQR</i>
+      Ottaviano <span>· 44 a.C. – 14 d.C.</span>
+    </a>
+    <nav class="navlinks" id="nv" aria-label="Indice dei capitoli"></nav>
+    <div class="theme-switch" role="group" aria-label="Selettore atmosfera visiva">
+      <button type="button" class="theme-btn active" data-set-theme="marble" title="Marmo Imperiale & Affresco">
+        <i style="background:#f6f1e7"></i><span>Marmo</span>
+      </button>
+      <button type="button" class="theme-btn" data-set-theme="pompeii" title="Porpora & Rosso Pompeiano">
+        <i style="background:#9e2a2b"></i><span>Pompei</span>
+      </button>
+      <button type="button" class="theme-btn" data-set-theme="arapacis" title="Notte sull'Ara Pacis">
+        <i style="background:#131f30"></i><span>Notte</span>
+      </button>
+    </div>
+    <div class="prog" id="prog"></div>
+  </div>
+</div>
+
+<!-- HERO SECTION CON HOTSPOT INTERATTIVI SULLA STATUA DI PRIMA PORTA -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-txt">
+      <div class="hero-kicker">Museo Digitale Interattivo · Dalla Repubblica all’Impero</div>
+      <h1>Ottaviano<span class="two">Augusto</span></h1>
+      <p class="hero-lead">Diciannove anni, un nome da vendicare e nessun esercito. In quattordici anni <b>Gaio Ottavio</b> diventa l’uomo più potente di Roma: la storia di come si costruisce un potere assoluto senza mai chiamarlo tirannide.</p>
+      <div class="cta">
+        <a class="btn" href="#storia" data-cursor="INIZIA">Esplora i 7 Capitoli <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="btn ghost" href="#cap2" data-cursor="VIDEO">Video Battaglie 60fps</a>
+        <a class="btn ghost" href="#flashcard" data-cursor="STUDIO">Mettiti alla prova</a>
+      </div>
+      <div class="hero-meta">
+        <div><span>Nascita</span><b>23 sett. 63 a.C.</b></div>
+        <div><span>Morte</span><b>19 ago. 14 d.C.</b></div>
+        <div><span>Principato</span><b>41 anni di pace</b></div>
+      </div>
+    </div>
+
+    <div class="hero-showcase" id="statue-box" data-cursor="ISPEZIONA">
+      <div class="showcase-badge"><i></i>Tocca i 4 punti sulla statua · Prima Porta (20 a.C.)</div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Statue-Augustus.jpg" alt="Statua di Augusto di Prima Porta, Musei Vaticani" fetchpriority="high">
+      <button type="button" class="hotspot active" style="top:21%;left:28%" data-hs="0" aria-label="Gesto dell'Adlocutio">1</button>
+      <button type="button" class="hotspot" style="top:41%;left:52%" data-hs="1" aria-label="La Corazza Istoriata">2</button>
+      <button type="button" class="hotspot" style="top:77%;left:35%" data-hs="2" aria-label="Eros sul Delfino">3</button>
+      <button type="button" class="hotspot" style="top:89%;left:56%" data-hs="3" aria-label="I Piedi Scalzi">4</button>
+      <div class="hotspot-card" id="hs-card">
+        <b id="hs-title">01 · Il gesto dell’Adlocutio</b>
+        <p id="hs-desc">Il braccio destro levato è la posa solenne con cui il comandante chiede silenzio alle legioni prima di parlare: esprime <em>auctoritas</em> assoluta senza bisogno di impugnare la spada.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      IMPERATOR CAESAR DIVI FILIVS AVGVSTVS <span>✦</span> PONTIFEX MAXIMVS <span>✦</span> TRIBVNICIA POTESTAS <span>✦</span> PATER PATRIAE <span>✦</span> RESTITVTOR REI PVBLICAE <span>✦</span> PAX AVGVSTA <span>✦</span>
+      IMPERATOR CAESAR DIVI FILIVS AVGVSTVS <span>✦</span> PONTIFEX MAXIMVS <span>✦</span> TRIBVNICIA POTESTAS <span>✦</span> PATER PATRIAE <span>✦</span> RESTITVTOR REI PVBLICAE <span>✦</span> PAX AVGVSTA <span>✦</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- SCHEDA INTRODUTTIVA & TIMELINE INTERATTIVA ILLUSTRATA -->
+<section class="sec" id="scheda">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Scheda introduttiva</div>
+        <h2>Un ragazzo contro un secolo di guerre</h2>
+      </div>
+      <p>Quando Cesare viene ucciso, nel 44 a.C., Roma ha già vissuto quasi cento anni di conflitti interni. Ottaviano non inventa la crisi: la cavalca meglio di chiunque altro, e la chiude.</p>
+    </div>
+
+    <div class="facts rv" id="facts-box"></div>
+
+    <div class="card rv">
+      <div class="card-head">
+        <h4>Un secolo di guerre civili · Timeline Interattiva Illustrata</h4>
+        <span>133 – 31 a.C. · Clicca o passa sui 13 nodi</span>
+      </div>
+      <div class="card-body">
+        <div class="chart" id="chart-civil"></div>
+        <div class="civil-preview" id="civil-preview"></div>
+      </div>
+      <div class="card-foot">Ogni punto è una frattura della Repubblica. Clicca su ciascuna data per esplorare l’evento e l’opera d’arte collegata: la vittoria di Azio del 31 a.C. apre la <em>Pax Augusta</em>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- I SETTE CAPITOLI CON IMMAGINI SU OGNI BLOCCO E VIDEO-BATTAGLIE 60FPS -->
+<section class="sec" id="storia">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">La storia in sette passaggi</div>
+        <h2>Da privato cittadino a <em>princeps</em></h2>
+      </div>
+      <p>Sette tappe, ciascuna illustrata in ogni singolo paragrafo e accompagnata da <strong>tre Video-Simulazioni Tattiche a 60fps</strong> (Mutina, Filippi, Azio) con audio procedurale e voce narrante.</p>
+    </div>
+    <div id="chapters"></div>
+  </div>
+</section>
+
+<!-- DATI E STRUTTURE -->
+<section class="sec" id="numeri">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Dati e strutture</div>
+        <h2>I numeri del potere</h2>
+      </div>
+      <p>Tre letture quantitative: quanto costava il consenso, che cosa si scontrava ad Azio e come funzionava, pezzo per pezzo, la macchina costituzionale costruita nel 27 a.C.</p>
+    </div>
+
+    <div class="card rv">
+      <div class="card-head"><h4>Il costo del consenso · 44 a.C.</h4><span>Donativo di Ottaviano alla plebe</span></div>
+      <div class="card-body">
+        <div class="metrics" style="margin:0">
+          <div><b data-count="250000" data-fmt="dot">250.000</b><span>beneficiari<br>plebei e veterani</span></div>
+          <div><b data-count="75" data-suffix=" <small>denari</small>">75 <small>denari</small></b><span>a testa<br>≈ 4 mesi di paga</span></div>
+          <div><b>18,75 <small>mln</small></b><span>denari distribuiti<br>in poche settimane</span></div>
+          <div><b data-count="83333" data-fmt="dot">83.333</b><span>anni di stipendio<br>di un legionario</span></div>
+        </div>
+      </div>
+      <div class="card-foot">Calcolo derivato: 75 × 250.000 = 18.750.000 denari. Con una paga legionaria di 225 denari l’anno (età augustea) il donativo equivale a 83.333 anni di servizio. Ottaviano vende i beni di famiglia e si indebita: sta comprando tempo politico, non consenso generico.</div>
+    </div>
+
+    <div class="card rv">
+      <div class="card-head"><h4>Azio · 2 settembre 31 a.C.</h4><span>Forze in campo</span></div>
+      <div class="card-body chart" id="chart-actium"></div>
+      <div class="card-foot">Valori approssimativi della tradizione storiografica: circa 400 unità per Ottaviano e Agrippa (in prevalenza liburne leggere), circa 230 per Antonio, di cui una sessantina egiziane. Le navi di Antonio sono più grandi e pesanti, ma meno manovrabili.</div>
+    </div>
+
+    <div class="card rv">
+      <div class="card-head"><h4>L’architettura del potere · 27 a.C.</h4><span>Le competenze accumulate da Augusto</span></div>
+      <div class="card-body chart" id="chart-power"></div>
+      <div class="card-foot">Le magistrature repubblicane restano in funzione: ciò che cambia è che un solo uomo ne cumula le competenze chiave, per di più a vita e senza collega. Il Senato conserva l’apparenza del governo, l’esercito obbedisce a una persona.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LABORATORIO NUMISMATICO 3D -->
+<section class="sec" id="monete">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Laboratorio Numismatico 3D</div>
+        <h2>La propaganda coniata nell’argento</h2>
+      </div>
+      <p>Nell’antichità le monete erano il più potente mezzo di comunicazione di massa: passavano di mano in mano tra soldati, mercanti e provinciali. Clicca su ogni moneta per ruotarla in 3D.</p>
+    </div>
+    <div class="coins-grid rv" id="coins-box"></div>
+  </div>
+</section>
+
+<!-- GALLERIA -->
+<section class="sec" id="galleria">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Immagini</div>
+        <h2>Il volto del potere</h2>
+      </div>
+      <p>Ritratti, monete e monumenti: la propaganda augustea non passava solo dalle parole. Clicca su un’immagine per ingrandirla ad alta risoluzione.</p>
+    </div>
+    <div class="gal rv" id="gallery"></div>
+  </div>
+</section>
+
+<!-- PROTAGONISTI -->
+<section class="sec" id="persone">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Chi è chi</div>
+        <h2>I protagonisti</h2>
+      </div>
+      <p>Otto figure senza le quali la vicenda non sta in piedi. Le date sono quelle della nascita e della morte; i ritratti vengono da sculture e monete antiche.</p>
+    </div>
+    <div class="cast rv" id="cast"></div>
+  </div>
+</section>
+
+<!-- FLASHCARD -->
+<section class="sec" id="flashcard">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Studio attivo</div>
+        <h2>Flashcard Illustrate</h2>
+      </div>
+      <p>Sedici carte illustrate per ripassare date, nomi e concetti chiave. Girala con un clic (o con <span class="kbd">Spazio</span>), naviga con le frecce.</p>
+    </div>
+    <div class="deckwrap rv">
+      <div>
+        <div class="deck" id="deck">
+          <button class="fc" id="fc" aria-live="polite" aria-label="Flashcard: clicca per girare" data-cursor="GIRA">
+            <div class="fc-face fc-front">
+              <div class="n"><span id="fc-n">Carta 01</span><span>Domanda</span></div>
+              <div class="fc-body-row">
+                <div class="q" id="fc-q"></div>
+                <img class="fc-thumb" id="fc-img1" alt="Illustrazione carta">
+              </div>
+              <div class="hint">↻ Clicca sulla carta o premi Spazio per vedere la risposta</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="n"><span id="fc-n2">Carta 01</span><span>Risposta</span></div>
+              <div class="fc-body-row">
+                <div class="a" id="fc-a"></div>
+                <img class="fc-thumb" id="fc-img2" alt="Illustrazione risposta">
+              </div>
+              <div class="hint">↺ Clicca per tornare alla domanda</div>
+            </div>
+          </button>
+        </div>
+        <div class="deck-ctrl">
+          <button class="btn ghost" id="fc-prev" aria-label="Carta precedente">← Precedente</button>
+          <button class="btn" id="fc-flip">Gira Carta</button>
+          <button class="btn ghost" id="fc-next" aria-label="Carta successiva">Successiva →</button>
+          <button class="btn ghost" id="fc-shuffle">Mescola</button>
+          <span class="count" id="fc-count">01 / 16</span>
+        </div>
+      </div>
+      <aside class="deck-side card" style="margin:0;padding:22px">
+        <h3>Come usarla</h3>
+        <p style="font-size:17px;color:var(--txt);margin:0 0 16px">Leggi la domanda, rispondi a voce, poi gira la carta. Clicca sui segmenti qui sotto per saltare direttamente a una carta specifica.</p>
+        <div class="pips" id="fc-pips"></div>
+        <p style="font-size:14px;color:var(--muted);margin:0">Mazzo completo: 16 carte · cronologia, istituzioni, battaglie e protagonisti.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="sec" id="quiz">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Verifica</div>
+        <h2>Otto domande</h2>
+      </div>
+      <p>Una risposta per domanda: la correzione appare subito, con la spiegazione storica dettagliata. Il punteggio si aggiorna in fondo.</p>
+    </div>
+    <div class="quiz rv" id="quiz-box"></div>
+  </div>
+</section>
+
+<!-- LESSICO -->
+<section class="sec" id="lessico">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Lessico</div>
+        <h2>Parole da conoscere</h2>
+      </div>
+      <p>I sedici termini tecnici che ricorrono nel testo, spiegati con chiarezza. Puoi filtrarli in tempo reale o aprirli con un clic.</p>
+    </div>
+    <input type="search" class="gloss-search" id="gloss-filter" placeholder="Cerca termine (es. Imperium, Princeps, Proscrizione)..." aria-label="Filtra il glossario">
+    <div class="gloss rv" id="gloss"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="sig">AUGUSTUS</div>
+    <p class="motto">Colui che accresce la grandezza di Roma</p>
+    <div class="src">
+      Immagini: Wikimedia Commons · pubblico dominio e licenze libere (Musei Vaticani, Musei Capitolini, Altes Museum, Glyptothek, Kunsthistorisches Museum, L. A. Castro).<br>
+      Simulazioni Video-Tattiche 60fps in HTML5 Canvas con sintesi audio WebAudio e voce narrante Web Speech API.<br>
+      <a href="#top">Torna all’inizio ↑</a> · <a href="#storia">I 7 Capitoli</a> · <a href="#monete">Monete 3D</a> · <a href="#flashcard">Flashcard</a> · <a href="#quiz">Quiz</a>
+    </div>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb">
+  <button id="lb-close" type="button">Chiudi ✕</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ==========================================================================
+     1. ARCHIVIO IMMAGINI WIKIMEDIA COMMONS + FALLBACK AUTOMATICO SVG
+     ========================================================================== */
+  const W = 'https://upload.wikimedia.org/wikipedia/commons/';
+  const T = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/';
+  const IMG = {
+    statue: W + 'e/eb/Statue-Augustus.jpg',
+    prima: W + '2/22/Augustus_Prima_Porta_%28detail%29.PNG',
+    cap: T + '7/75/Augustus_with_gemmed_crown_Musei_Capitolini_S495.jpg/1280px-Augustus_with_gemmed_crown_Musei_Capitolini_S495.jpg',
+    cicerone: T + '6/64/Bust_of_Cicero%2C_Capitoline_Museums_%2811250896055%29.jpg/1280px-Bust_of_Cicero%2C_Capitoline_Museums_%2811250896055%29.jpg',
+    cesare: W + 'b/b8/C%C3%A9sar_%2813667960455%29.jpg',
+    agrippa: T + '9/98/Portrait_of_Marcus_Vipsanius_Agrippa-Uffizi.jpg/1280px-Portrait_of_Marcus_Vipsanius_Agrippa-Uffizi.jpg',
+    cleopatra: T + 'b/bb/Bust_of_Cleopatra_VII_-_Altes_Museum_-_Berlin_-_Germany_2017.jpg/1280px-Bust_of_Cleopatra_VII_-_Altes_Museum_-_Berlin_-_Germany_2017.jpg',
+    antonio: W + '9/9c/Marcus_Antonius_-_Cleopatra_32_BC_90020163.jpg',
+    azio: W + '9/95/Castro_Battle_of_Actium.jpg',
+    denario: W + '8/86/Augustus_Denarius_84000963.jpg',
+    arapacis: W + '0/0d/8112_-_Roma_-_Ara_Pacis_-_Augusto_-_Foto_Giovanni_Dall%27Orto_-_30-Mar-2008.jpg',
+    arapacisFregio: W + '1/10/South_frieze_detail%2C_Ara_Pacis.jpg',
+    resgestae: T + '7/7a/Res_gestae_divi_Augusti%2C_GD006036.jpg/1280px-Res_gestae_divi_Augusti%2C_GD006036.jpg',
+    mausoleo: W + 'b/b4/Rome%2C_Mausoleum_of_Augustus_01.jpg',
+    foro: T + 'a/a3/Roman_Forum%2C_Panorama_%2845485051185%29.jpg/1280px-Roman_Forum%2C_Panorama_%2845485051185%29.jpg',
+    arco: T + 'f/f1/Arch_of_Augustus_in_Aosta_%283%29.jpg/1280px-Arch_of_Augustus_in_Aosta_%283%29.jpg',
+    livia: T + '0/06/Livia_Drusilla_Glyptothek_Munich_367.jpg/1280px-Livia_Drusilla_Glyptothek_Munich_367.jpg',
+    tiberio: W + 'a/ab/Tiberius_bust_from_Hercolaneum.jpg'
+  };
+
+  function bindImageFallbacks() {
+    $$('img').forEach(img => {
+      if (img.dataset.fbBound) return;
+      img.dataset.fbBound = '1';
+      img.addEventListener('error', () => {
+        const label = encodeURIComponent((img.alt || 'Roma Antica').slice(0, 28));
+        img.src = 'https://placehold.co/600x420/2b1d19/f0d48a?text=' + label;
+      });
+    });
+  }
+
+  /* ==========================================================================
+     2. PRELOADER, CURSORE MAGNETICO & PARTICELLE DORATE
+     ========================================================================== */
+  (function initPreloader() {
+    const pre = $('#preloader'), yr = $('#pre-yr'), bar = $('#pre-bar');
+    if (!pre) return;
+    let step = 0;
+    const years = ['63 a.C.', '44 a.C.', '42 a.C.', '31 a.C.', '27 a.C.', '14 d.C.'];
+    const iv = setInterval(() => {
+      step++;
+      bar.style.width = Math.min(100, step * 20) + '%';
+      if (years[step]) yr.textContent = years[step];
+      if (step >= 5) {
+        clearInterval(iv);
+        setTimeout(() => pre.classList.add('done'), 180);
+      }
+    }, 160);
+  })();
+
+  (function initCursor() {
+    const ring = $('#c-ring'), dot = $('#c-dot'), lbl = $('#c-lbl');
+    if (!ring || !dot || window.matchMedia('(pointer: coarse)').matches) return;
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+    addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+      document.documentElement.style.setProperty('--mx', (mx / innerWidth * 100).toFixed(1) + '%');
+      document.documentElement.style.setProperty('--my', (my / innerHeight * 100).toFixed(1) + '%');
+      const target = e.target.closest('[data-cursor], .fig .frame, .blk-media, .gal figure, .person .ph, .coin-stage, .tp-stage');
+      if (target) {
+        ring.classList.add('active');
+        lbl.textContent = target.dataset.cursor || (target.classList.contains('tp-stage') ? 'PLAY VIDEO' : target.classList.contains('coin-stage') ? 'RUOTA 3D' : 'ZOOM');
+      } else {
+        ring.classList.remove('active');
+      }
+    }, { passive: true });
+    function loop() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx.toFixed(1)}px, ${ry.toFixed(1)}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
+
+  (function initDustCanvas() {
+    const cvs = $('#dust-canvas');
+    if (!cvs || reduce) return;
+    const ctx = cvs.getContext('2d');
+    let w = cvs.width = innerWidth, h = cvs.height = innerHeight;
+    addEventListener('resize', () => { w = cvs.width = innerWidth; h = cvs.height = innerHeight; });
+    const pts = Array.from({ length: 38 }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      r: 1 + Math.random() * 2.2,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: -0.15 - Math.random() * 0.35,
+      a: 0.18 + Math.random() * 0.45
+    }));
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+        if (p.x < -10) p.x = w + 10;
+        if (p.x > w + 10) p.x = -10;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(198, 146, 44, ${p.a})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  /* ==========================================================================
+     3. SELETTORE TEMA & HOTSPOTS SULLA STATUA DI PRIMA PORTA
+     ========================================================================== */
+  $$('[data-set-theme]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.documentElement.setAttribute('data-theme', btn.dataset.setTheme);
+      $$('[data-set-theme]').forEach(b => b.classList.toggle('active', b === btn));
+    });
+  });
+
+  const HOTSPOTS = [
+    { t: '01 · Il gesto dell’Adlocutio', d: 'Il braccio destro levato è la posa solenne con cui il comandante chiede silenzio alle legioni prima di parlare: esprime auctoritas assoluta senza bisogno di impugnare la spada.' },
+    { t: '02 · La Corazza Istoriata (20 a.C.)', d: 'Al centro del torace il re dei Parti restituisce le insegne sottratte a Crasso a Carre (53 a.C.): una vittoria diplomatica trasformata in trionfo cosmico sotto lo sguardo degli dèi.' },
+    { t: '03 · Eros a cavallo di un Delfino', d: 'Ai piedi di Augusto compare Cupido, figlio di Venere: ricorda che la Gens Iulia discende direttamente dalla dea dell’amore e che la vittoria navale di Azio ha pacificato i mari.' },
+    { t: '04 · I Piedi Scalzi degli Eroi', d: 'Un comandante romano non marciava mai a piedi nudi: i piedi scalzi sono un codice iconografico greco riservato agli dèi e agli eroi divinizzati.' }
+  ];
+  $$('.hotspot').forEach(btn => {
+    const activate = () => {
+      const item = HOTSPOTS[+btn.dataset.hs];
+      $$('.hotspot').forEach(b => b.classList.toggle('active', b === btn));
+      $('#hs-title').textContent = item.t;
+      $('#hs-desc').textContent = item.d;
+    };
+    btn.addEventListener('click', activate);
+    btn.addEventListener('mouseenter', activate);
+  });
+
+  /* ==========================================================================
+     4. SCHEDA RAPIDA & DATI CAPITOLI CON IMMAGINI SU OGNI BLOCCO
+     ========================================================================== */
+  const QUICK_FACTS = [
+    { k: 'Nome completo', v: 'Gaio Giulio Cesare Ottaviano', s: 'dal 27 a.C. Imperator Caesar Augustus', img: IMG.cap },
+    { k: 'Origine', v: 'Roma, Colle Palatino', s: 'famiglia equestre, pronipote di Cesare', img: IMG.foro },
+    { k: 'Eredità', v: 'Adottato da Cesare', s: 'testamento aperto nel marzo 44 a.C.', img: IMG.cesare },
+    { k: 'Titoli', v: 'Augustus · Princeps', s: 'pontifex maximus · pater patriae (2 a.C.)', img: IMG.arapacis }
+  ];
+  $('#facts-box').innerHTML = QUICK_FACTS.map(f =>
+    `<div class="fact-card">
+      <img class="fact-thumb" src="${f.img}" alt="${f.k}" loading="lazy">
+      <div><span>${f.k}</span><b>${f.v}<small>${f.s}</small></b></div>
+    </div>`
+  ).join('');
+
+  const CHAPTERS = [
+    {
+      num: 'I', date: '44 a.C.', tag: 'Roma · Grecia · Italia',
+      title: 'Il punto di partenza', sub: 'L’azzardo del diciannovenne',
+      emblem: IMG.cesare,
+      aura: ['rgba(158, 42, 43, 0.16)', 'rgba(200, 150, 50, 0.12)'],
+      blocks: [
+        { h: 'Il protagonista in scena', t: 'Gaio Ottavio non è nessuno: ha 19 anni, salute cagionevole e si trova in Grecia a studiare quando Cesare viene assassinato. Non ha legioni, non ha cariche, non ha esperienza militare: ha soltanto un nome da portare e un’eredità da rivendicare.', img: IMG.cap, icap: 'Ottaviano giovane · Musei Capitolini' },
+        { h: 'La prima scelta decisiva', t: 'Tutti i suoi familiari, a partire dalla madre, gli consigliano di rinunciare all’eredità per non finire nel mirino dei cesaricidi o di Antonio. Ottaviano rifiuta i consigli di prudenza, sbarca subito in Italia e compie la sua prima mossa: accetta l’adozione testamentaria e assume il nome di <strong>Gaio Giulio Cesare Ottaviano</strong>, ereditando il nome più potente del mondo romano.', img: IMG.cesare, icap: 'Giulio Cesare · Ritratto Tuscolano' },
+        { quote: ['“A diciannove anni, di mia iniziativa e a mie spese, raccolsi un esercito con il quale liberai la repubblica da una fazione che la opprimeva.”', 'Res Gestae Divi Augusti, 1'] },
+        { h: 'L’obiettivo', t: 'Capisce immediatamente che il nome di Cesare è la chiave per mobilitare le legioni e la plebe. Non si presenta come un pacificatore, ma come il vendicatore legittimo del padre.', img: IMG.resgestae, icap: 'Iscrizione delle Res Gestae, cap. 1' },
+        { fig: { src: IMG.cesare, alt: 'Ritratto di Giulio Cesare, ritratto tuscolano', cap: 'Il “ritratto tuscolano”: uno dei pochi busti di Cesare eseguiti mentre era vivo (45–43 a.C.). L’eredità del nome è il capitale politico di Ottaviano.', credit: 'Wikimedia Commons' } }
+      ]
+    },
+    {
+      num: 'II', date: '44–43 a.C.', tag: 'Roma · Mutina',
+      title: 'La conquista delle masse', sub: 'Il gioco doppio con il Senato',
+      emblem: IMG.denario,
+      aura: ['rgba(184, 81, 52, 0.16)', 'rgba(166, 118, 30, 0.16)'],
+      blocks: [
+        { h: 'La mossa economica', t: 'Quando Antonio gli nega i fondi ereditati da Cesare, Ottaviano non si perde d’animo: vende i beni personali della sua famiglia e prende soldi a prestito per distribuire di persona <strong>75 denari a testa a 250.000 plebei romani</strong>. In poche settimane, la plebe urbana e i veterani di Cesare non vedono più in lui un ragazzino, ma il loro vero benefattore.', img: IMG.denario, icap: 'Denario d’argento: 75 a ogni plebeo' },
+        { h: 'Il capolavoro tattico contro Antonio', t: 'Ottaviano capisce che il Senato ha paura di Marco Antonio. Si finge allora difensore della legalità repubblicana e si fa alleato Cicerone, il più autorevole degli oratori e il più feroce nemico di Antonio.', img: IMG.cicerone, icap: 'Cicerone, autore delle Filippiche' },
+        { quote: ['“Questo giovane è da lodare, da ornare, da togliere di mezzo.”', 'Cicerone a Bruto, Ad familiares XI, 20 — il verbo tollere vale sia “esaltare” sia “eliminare”'] },
+        { h: 'Il risultato', t: 'Il Senato, convinto di poterlo manovrare a piacimento, gli conferisce illegalmente il rango di senatore, il potere militare (propretore) e lo manda a combattere contro Antonio a Modena (43 a.C.). Antonio viene respinto, i due consoli muoiono sul campo e Ottaviano si ritrova, a vent’anni, da solo al comando dell’intero esercito consolare.', img: IMG.prima, icap: 'Ottaviano in corazza da comandante' },
+        { battle: 'modena' },
+        { fig: { src: IMG.denario, alt: 'Denario di Augusto', cap: 'Denario: la moneta con cui si pagano legioni e plebe. Un denario vale quattro sesterzi, cioè circa quattro giorni di paga per un operaio.', credit: 'Wikimedia Commons' } }
+      ]
+    },
+    {
+      num: 'III', date: '43 a.C.', tag: 'Roma · Mutina',
+      title: 'La forza delle armi', sub: 'Il patto di potere',
+      emblem: IMG.cicerone,
+      aura: ['rgba(158, 42, 43, 0.22)', 'rgba(94, 58, 110, 0.14)'],
+      blocks: [
+        { h: 'Il ricatto al Senato (agosto 43 a.C.)', t: 'Quando i senatori credono di aver usato Ottaviano e tentano di liquidarlo negandogli il consolato, lui getta la maschera: marcia in armi su Roma alla testa di otto legioni. A soli 19 anni si fa eleggere console con la forza, dimostrando che senza di lui lo Stato non può funzionare.', img: IMG.foro, icap: 'I Rostri e la Curia nel Foro Romano' },
+        { h: 'Il Secondo Triumvirato', t: 'Consapevole di non poter governare da solo contro tutti, Ottaviano cambia fronte e si allea con i suoi ex nemici, Marco Antonio ed Emilio Lepido. Insieme creano una magistratura legalizzata (<i>Lex Titia</i>) con poteri dittatoriali per cinque anni.', img: IMG.antonio, icap: 'Moneta triumvirale di Marco Antonio' },
+        { h: 'Il cinismo delle proscrizioni', t: 'Per finanziare la sua ascesa e sterminare i rivali interni, Ottaviano accetta le liste di proscrizione e sacrifica senza esitazione persino il suo vecchio alleato Cicerone, pur di mantenere saldo il patto e ripulire Roma da ogni potenziale oppositore.', img: IMG.cicerone, icap: 'Cicerone, sacrificato nelle proscrizioni' },
+        { metrics: [['3', 'triumviri', 'Ottaviano, Antonio, Lepido'], ['5', 'anni di potere', 'rinnovabili con la Lex Titia'], ['300', 'senatori proscritti', 'stima delle fonti antiche'], ['130', 'milioni di sesterzi', 'confiscati per finanziare la guerra']] },
+        { fig: { src: IMG.cicerone, alt: 'Busto di Cicerone ai Musei Capitolini', cap: 'Cicerone, la voce del Senato: proscritto nel 43 a.C. e ucciso a Formia. La sua testa e le sue mani furono esposte sui Rostri.', credit: 'Wikimedia Commons' } }
+      ]
+    },
+    {
+      num: 'IV', date: '42–40 a.C.', tag: 'Macedonia · Italia',
+      title: 'Il consolidamento in Italia', sub: 'La fedeltà delle legioni',
+      emblem: IMG.foro,
+      aura: ['rgba(166, 118, 30, 0.18)', 'rgba(184, 81, 52, 0.14)'],
+      blocks: [
+        { h: 'La vendetta di Filippi (42 a.C.)', t: 'Ottaviano partecipa alla campagna di Filippi, in Macedonia, contro Bruto e Cassio. Con la distruzione dei cesaricidi, la vendetta per la morte di Cesare è compiuta.', img: IMG.prima, icap: 'Marte Ultore e la vendetta di Cesare' },
+        { battle: 'filippi' },
+        { h: 'La mossa strategica nella spartizione', t: 'Mentre Antonio sceglie il ricco e prestigioso Oriente, Ottaviano sceglie la Spagna e soprattutto il controllo dell’<strong>Italia</strong>. È la scelta più difficile, ma a lungo termine la più vincente: chi controlla l’Italia controlla il cuore politico di Roma e la riserva di reclutamento dell’esercito.', img: IMG.arco, icap: 'Arco di Augusto in Italia (Aosta)' },
+        { h: 'La gestione dei veterani', t: 'Ottaviano deve espropriare terre per oltre 150.000 soldati. Nonostante le violente proteste e la guerra civile di Perugia (41–40 a.C.), non cede di un millimetro: garantisce le terre promesse alle legioni, legando per sempre l’esercito romano alla sua persona.', img: IMG.denario, icap: 'Paga e terre per 150.000 veterani' },
+        { fig: { src: IMG.foro, alt: 'Panorama del Foro Romano', cap: 'Il Foro Romano: qui si decide la politica, si arruolano le legioni e si distribuiscono le terre. Chi controlla l’Italia controlla questo spazio.', credit: 'Wikimedia Commons' } }
+      ]
+    },
+    {
+      num: 'V', date: '40–32 a.C.', tag: 'Roma · Alessandria',
+      title: 'Il capolavoro della propaganda', sub: 'La guerra d’Occidente',
+      emblem: IMG.cleopatra,
+      aura: ['rgba(94, 58, 110, 0.2)', 'rgba(158, 42, 43, 0.14)'],
+      blocks: [
+        { h: 'La costruzione dell’immagine', t: 'Mentre Antonio si stabilisce ad Alessandria vivendo secondo i fasti orientali con Cleopatra, Ottaviano a Roma costruisce un’immagine opposta: si mostra austero, sobrio, custode dei valori tradizionali (<i>mos maiorum</i>) e della religione patria.', img: IMG.arapacis, icap: 'Ottaviano velato secondo il mos maiorum' },
+        { h: 'La delegittimazione dell’avversario', t: 'Ottaviano trasforma una lotta personale per il potere in una guerra di civiltà: dipinge Antonio come un traditore plagiato da una regina straniera che vuole regalare province romane ai suoi figli e spostare la capitale da Roma ad Alessandria.', img: IMG.antonio, icap: 'Denario di Antonio e Cleopatra' },
+        { h: 'Il colpo di stato legale (32 a.C.)', t: 'Ruba illegalmente il testamento di Antonio dal tempio delle Vestali e lo legge in Senato per indignare l’opinione pubblica. Fa giurare fedeltà a tutta l’Italia e all’Occidente (<i>coniuratio totius Italiae</i>) e, con una mossa geniale, fa dichiarare guerra non ad Antonio — evitando l’accusa di scatenare un’altra guerra civile — ma direttamente a Cleopatra.', img: IMG.cleopatra, icap: 'Cleopatra VII · Altes Museum, Berlino' },
+        { fig: { src: IMG.cleopatra, alt: 'Busto di Cleopatra VII, Altes Museum di Berlino', cap: 'Cleopatra VII (69–30 a.C.): regina d’Egitto, ultima sovrana della dinastia tolemaica. Diventa il bersaglio ufficiale della guerra del 32 a.C.', credit: 'Wikimedia Commons' } },
+        { fig: { src: IMG.antonio, alt: 'Denario di Marco Antonio e Cleopatra', cap: 'Denario coniato da Antonio in Oriente: al dritto il ritratto della regina. La moneta è già propaganda, e Ottaviano la userà contro di lui.', credit: 'Wikimedia Commons' } }
+      ]
+    },
+    {
+      num: 'VI', date: '31–30 a.C.', tag: 'Azio · Alessandria',
+      title: 'La vittoria militare definitiva', sub: 'L’eliminazione dei rivali',
+      emblem: IMG.azio,
+      aura: ['rgba(29, 92, 99, 0.22)', 'rgba(166, 118, 30, 0.15)'],
+      blocks: [
+        { h: 'Il trionfo di Azio (31 a.C.)', t: 'Nelle acque di Azio, grazie alla formidabile abilità navale del suo braccio destro Marco Vipsanio Agrippa, Ottaviano annienta la flotta di Antonio e Cleopatra. È la vittoria militare che chiude la contesa.', img: IMG.agrippa, icap: 'Marco Vipsanio Agrippa · Galleria degli Uffizi' },
+        { battle: 'azio' },
+        { h: 'La conquista dell’Egitto (30 a.C.)', t: 'Ottaviano entra ad Alessandria, provocando il suicidio di Antonio e Cleopatra. Trasforma l’Egitto non in una normale provincia, ma in una proprietà personale esclusiva del principe, assicurando a sé stesso una ricchezza sconfinata e il controllo del grano per sfamare Roma.', img: IMG.azio, icap: 'La flotta romana vittoriosa ad Azio' },
+        { h: 'Nessun erede superstite', t: 'Per evitare qualsiasi futura minaccia alla sua legittimità, fa assassinare Cesarione, il figlio biologico di Cesare e Cleopatra. A 33 anni, Ottaviano è l’unico padrone indiscusso del mondo romano: la Repubblica è formalmente morta con le sue vittorie.', img: IMG.cap, icap: 'Ottaviano padrone unico del Mediterraneo' },
+        { fig: { src: IMG.azio, alt: 'La battaglia di Azio, dipinto di Lorenzo A. Castro', cap: 'La battaglia di Azio in un dipinto di Lorenzo A. Castro (1672): le navi leggere di Agrippa contro le grandi quinqueremi di Antonio.', credit: 'Wikimedia Commons' } }
+      ]
+    },
+    {
+      num: 'VII', date: '29 a.C. – 14 d.C.', tag: 'Roma',
+      title: 'Da generale a Imperatore', sub: 'La nascita del Principato',
+      emblem: IMG.arapacis,
+      aura: ['rgba(200, 150, 50, 0.22)', 'rgba(59, 110, 76, 0.14)'],
+      blocks: [
+        { h: 'Imparare dagli errori di Cesare', t: 'Ottaviano ha capito perché Cesare fu ucciso: ostentare la monarchia e la dittatura a vita fa nascere tirannicidi. Ottaviano decide di fare l’esatto contrario: non cambia i nomi delle istituzioni repubblicane, ma ne assume il controllo totale dall’interno.', img: IMG.arapacisFregio, icap: 'Corteo senatorio sull’Ara Pacis' },
+        { h: 'La finta restaurazione (27 a.C.)', t: 'Nel gennaio del 27 a.C., in Senato, dichiara teatralmente di voler rimettere tutti i poteri straordinari nelle mani della Repubblica (<i>restitutio rei publicae</i>). Il Senato, terrorizzato dall’idea di ricadere nel caos, lo supplica di restare e gli conferisce il titolo sacro di <strong>Augustus</strong> (colui che accresce la grandezza di Roma) e il ruolo di <i>princeps</i> (primo fra pari).', img: IMG.cap, icap: 'Augusto con corona civica e gemmata' },
+        { quote: ['“Dopo aver spento le guerre civili, essendo console per la settima volta, rimisi la repubblica dal mio potere alla discrezione del senato e del popolo romano.”', 'Res Gestae Divi Augusti, 34'] },
+        { h: 'Il potere assoluto mascherato', t: 'Ottaviano ottiene il comando supremo di tutti gli eserciti (<i>imperium maius</i>) e l’inviolabilità con il diritto di veto (<i>tribunicia potestas</i>). Senza mai farsi chiamare re o dittatore, ha trasformato la Repubblica in un Impero ereditario, inaugurando la <strong>Pax Augusta</strong> dopo un secolo di guerre civili.', img: IMG.mausoleo, icap: 'Mausoleo dinastico di Augusto a Roma' },
+        { fig: { src: IMG.arapacis, alt: 'Rilievo dell’Ara Pacis con Augusto', cap: 'Ara Pacis (13–9 a.C.): l’altare della pace dedicato dal Senato. Augusto vi appare velato come pontefice, non come generale.', credit: 'Wikimedia Commons' } },
+        { fig: { src: IMG.resgestae, alt: 'Res Gestae Divi Augusti', cap: 'Le Res Gestae: il bilancio ufficiale del suo operato, inciso su pietra e diffuso in tutto l’impero. È il primo grande esempio di autobiografia politica.', credit: 'Wikimedia Commons' } }
+      ]
+    }
+  ];
+
+  /* ==========================================================================
+     5. RENDERING DEI CAPITOLI, GALLERIA, MONETE 3D, PROTAGONISTI E GLOSSARIO
+     ========================================================================== */
+  const chaptersEl = $('#chapters');
+  let figN = 0;
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function figHTML(f) {
+    figN++;
+    return `<figure class="fig rv" data-src="${f.src}" data-cap="${esc(f.cap + ' · ' + (f.credit || ''))}">
+      <div class="frame"><img src="${f.src}" alt="${esc(f.alt || f.cap)}" loading="lazy" decoding="async"></div>
+      <figcaption><span><b>Tavola ${figN}</b> · ${f.cap}</span><span>🔍 Clicca per ingrandire</span></figcaption>
+    </figure>`;
+  }
+
+  function blockHTML(b) {
+    if (b.h) {
+      return `<div class="blk rv">
+        <div><h3>${b.h}</h3><p>${b.t}</p></div>
+        <div class="blk-media" data-src="${b.img}" data-cap="${esc(b.icap || b.h)}">
+          <img src="${b.img}" alt="${esc(b.icap || b.h)}" loading="lazy">
+          <span>${b.icap || b.h}</span>
+        </div>
+      </div>`;
+    }
+    if (b.quote) return `<blockquote class="quote rv"><p>${b.quote[0]}</p><cite>${b.quote[1]}</cite></blockquote>`;
+    if (b.fig) return figHTML(b.fig);
+    if (b.metrics) {
+      return `<div class="metrics rv">${b.metrics.map(m =>
+        `<div><b data-count="${m[0]}">${m[0]}</b><span>${m[1]}<br>${m[2]}</span></div>`
+      ).join('')}</div>`;
+    }
+    if (b.battle) return `<div class="battle-slot" data-battle="${b.battle}"></div>`;
+    return '';
+  }
+
+  CHAPTERS.forEach((c, i) => {
+    const el = document.createElement('section');
+    el.className = 'ch';
+    el.id = 'cap' + (i + 1);
+    el.dataset.aura1 = c.aura[0];
+    el.dataset.aura2 = c.aura[1];
+    el.innerHTML =
+      `<aside class="ch-aside">
+        <div>
+          <div class="ch-num">${c.num}</div>
+          <div class="ch-date">${c.date}</div>
+          <div class="ch-tag">${c.tag}</div>
+        </div>
+        <div class="ch-emblem" data-src="${c.emblem}" data-cap="${esc(c.title + ' · ' + c.date)}">
+          <img src="${c.emblem}" alt="${esc(c.title)}" loading="lazy">
+        </div>
+      </aside>
+      <div>
+        <div class="eyebrow">Capitolo ${c.num} · ${c.date}</div>
+        <h2>${c.title}</h2>
+        <p class="ch-sub">${c.sub}</p>
+        ${c.blocks.map(blockHTML).join('')}
+      </div>`;
+    chaptersEl.appendChild(el);
+  });
+
+  /* Laboratorio Monete 3D */
+  const COINS = [
+    {
+      yr: '44 a.C. · Emissione Cesariana',
+      title: 'Denario dell’Eredità di Cesare',
+      img: IMG.cesare,
+      backTitle: 'CAESAR DICT PERPETVO',
+      backDesc: 'Il primo ritratto di un romano vivente su moneta: il nome e l’effigie che Ottaviano eredita a 19 anni.',
+      desc: 'Assumendo il nome di Gaio Giulio Cesare, Ottaviano trasforma ogni moneta del dittatore in un manifesto della propria legittimità.'
+    },
+    {
+      yr: '38 a.C. · Legioni e Consenso',
+      title: 'Denario di Caesar Divi Filius',
+      img: IMG.denario,
+      backTitle: 'DIVI IVLI FILIVS',
+      backDesc: 'Sul rovescio la cometa Sidus Iulium: se Cesare è diventato un dio, Ottaviano è letteralmente “figlio di un dio”.',
+      desc: 'Coniato per pagare i veterani e finanziare la guerra in Italia: salda la fedeltà delle legioni alla sacralità della Gens Iulia.'
+    },
+    {
+      yr: '32 a.C. · Zecca d’Oriente',
+      title: 'Denario di Antonio e Cleopatra',
+      img: IMG.antonio,
+      backTitle: 'CLEOPATRAE REGINAE REGVM',
+      backDesc: 'Cleopatra chiamata “Regina dei Re e di figli che sono Re”: la prova visiva usata da Ottaviano per indignare il Senato.',
+      desc: 'Antonio mette una regina straniera sul dritto di un denario romano: per la propaganda di Ottaviano è un tradimento.'
+    },
+    {
+      yr: '27 a.C. · Nascita del Principato',
+      title: 'Conio Imperiale di Augustus',
+      img: IMG.cap,
+      backTitle: 'OB CIVIS SERVATOS · PAX',
+      backDesc: 'Corona civica di quercia e alloro: Augusto non si presenta come re conquistatore, ma come salvatore dei cittadini.',
+      desc: 'Diffusa da Lugdunum a tutto il Mediterraneo, fissa il volto eternamente giovane e pacato del nuovo Princeps.'
+    }
+  ];
+  $('#coins-box').innerHTML = COINS.map(c =>
+    `<article class="coin-card">
+      <div>
+        <div class="coin-stage" title="Clicca per ruotare la moneta in 3D">
+          <div class="coin-disc">
+            <div class="coin-face"><img src="${c.img}" alt="${esc(c.title)}" loading="lazy"></div>
+            <div class="coin-face coin-back"><b>${c.backTitle}</b><span>${c.backDesc}</span></div>
+          </div>
+        </div>
+        <div class="coin-meta">${c.yr}</div>
+        <h4>${c.title}</h4>
+        <p>${c.desc}</p>
+      </div>
+      <button type="button" class="btn ghost coin-flip-btn" style="width:100%;justify-content:center;padding:10px">↻ Ruota Moneta 3D</button>
+    </article>`
+  ).join('');
+  $$('.coin-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+  });
+
+  /* Galleria & Protagonisti */
+  const GALLERY = [
+    { src: IMG.cap, cap: 'Augusto con corona gemmata · Musei Capitolini', credit: 'Wikimedia Commons' },
+    { src: IMG.prima, cap: 'Augusto di Prima Porta · dettaglio della corazza', credit: 'Wikimedia Commons' },
+    { src: IMG.arapacisFregio, cap: 'Ara Pacis · fregio meridionale', credit: 'Wikimedia Commons' },
+    { src: IMG.mausoleo, cap: 'Mausoleo di Augusto · Campo Marzio, Roma', credit: 'Wikimedia Commons' },
+    { src: IMG.arco, cap: 'Arco di Augusto · Aosta, 25 a.C.', credit: 'Wikimedia Commons' },
+    { src: IMG.denario, cap: 'Denario di Augusto · zecca di Lugdunum', credit: 'Wikimedia Commons' },
+    { src: IMG.foro, cap: 'Foro Romano · vista verso i Fori Imperiali', credit: 'Wikimedia Commons' },
+    { src: IMG.antonio, cap: 'Denario di Antonio e Cleopatra · 32 a.C.', credit: 'Wikimedia Commons' }
+  ];
+  $('#gallery').innerHTML = GALLERY.map(g =>
+    `<figure data-src="${g.src}" data-cap="${esc(g.cap + ' · ' + g.credit)}">
+      <img src="${g.src}" alt="${esc(g.cap)}" loading="lazy" decoding="async">
+      <figcaption>${g.cap}</figcaption>
+    </figure>`
+  ).join('');
+
+  const CAST = [
+    { n: 'Ottaviano Augusto', r: '63 a.C. – 14 d.C.', src: IMG.cap, pos: '50% 18%', t: 'Il pronipote di Cesare che nel 27 a.C. diventa Augustus. Nessun titolo monarchico, ma tutti i poteri.' },
+    { n: 'Giulio Cesare', r: '100 – 44 a.C.', src: IMG.cesare, pos: '50% 30%', t: 'Dittatore a vita, assassinato alle Idi di marzo. Il suo testamento è l’arma che lancia Ottaviano.' },
+    { n: 'Marco Antonio', r: '83 – 30 a.C.', src: IMG.antonio, pos: '50% 50%', t: 'Il generale di Cesare, signore d’Oriente. Perde tutto ad Azio e si uccide ad Alessandria.' },
+    { n: 'Cleopatra VII', r: '69 – 30 a.C.', src: IMG.cleopatra, pos: '50% 40%', t: 'Ultima regina tolemaica d’Egitto. La sua alleanza con Antonio è usata da Ottaviano come casus belli.' },
+    { n: 'Marco Vipsanio Agrippa', r: '63 – 12 a.C.', src: IMG.agrippa, pos: '50% 25%', t: 'Amico d’infanzia e ammiraglio: vince le guerre navali che Ottaviano non può vincere da solo.' },
+    { n: 'Cicerone', r: '106 – 43 a.C.', src: IMG.cicerone, pos: '50% 30%', t: 'Oratore e leader senatorio. Crede di usare Ottaviano; viene usato e poi proscritto.' },
+    { n: 'Livia Drusilla', r: '58 a.C. – 29 d.C.', src: IMG.livia, pos: '50% 25%', t: 'Moglie di Augusto, madre di Tiberio: la rete familiare che prepara la successione.' },
+    { n: 'Tiberio', r: '42 a.C. – 37 d.C.', src: IMG.tiberio, pos: '50% 28%', t: 'Figliastro e successore: nel 14 d.C. eredita il Principato, ormai una carica trasmissibile.' }
+  ];
+  $('#cast').innerHTML = CAST.map(p =>
+    `<article class="person">
+      <div class="ph" data-src="${p.src}" data-cap="${esc(p.n + ' (' + p.r + ')')}"><img src="${p.src}" alt="${esc(p.n)}" loading="lazy" style="object-position:${p.pos}"></div>
+      <h4>${p.n}</h4><span class="role">${p.r}</span><p>${p.t}</p>
+    </article>`
+  ).join('');
+
+  /* Glossario con filtro live */
+  const GLOSS = [
+    ['Imperium', 'Il potere di comando supremo, militare e giurisdizionale, che spetta ai magistrati superiori. È la sostanza concreta del potere romano.'],
+    ['Imperium maius', 'Un imperium “maggiore” di quello di ogni altro governatore: consente ad Augusto di intervenire in qualsiasi provincia, anche senatoria.'],
+    ['Tribunicia potestas', 'La potenza del tribuno della plebe senza ricoprirne la carica: veto su magistrati e delibere, inviolabilità personale, convocazione delle assemblee.'],
+    ['Princeps', '“Primo”: primo a parlare in Senato, primo per autorevolezza. È il nome che Augusto preferisce, perché non evoca la monarchia.'],
+    ['Augustus', 'Titolo sacrale legato agli auguri e al verbo <em>augere</em>, “accrescere”. Non indica un potere specifico, ma un’eccellenza quasi religiosa.'],
+    ['Restitutio rei publicae', 'La “restituzione” formale del potere al Senato e al popolo, messa in scena da Augusto nel 27 a.C. per legittimare il nuovo assetto.'],
+    ['Mos maiorum', 'Il complesso dei costumi degli antenati: il codice non scritto su cui fonda la morale pubblica romana, rivendicato dalla propaganda augustea.'],
+    ['Proscrizione', 'La pubblicazione di liste di cittadini fuorilegge: chiunque può ucciderli e incamerarne i beni. Usata da Silla nell’82 e dai triumviri nel 43 a.C.'],
+    ['Triumvirato', 'Governo di tre uomini. Il primo (60 a.C.) è un accordo privato; il secondo (43 a.C.) è una magistratura legittimata dalla <em>Lex Titia</em>.'],
+    ['Coniuratio', 'Giuramento collettivo. La <em>coniuratio totius Italiae</em> del 32 a.C. lega i cittadini a Ottaviano con un vincolo personale, non istituzionale.'],
+    ['Legione', 'Unità di base dell’esercito romano, circa 5.000–6.000 uomini. La fedeltà delle legioni al comandante, più che allo Stato, è il motore delle guerre civili.'],
+    ['Denario', 'Moneta d’argento romana, pari a quattro sesterzi: è l’unità con cui si misura paga militare, donativi e prezzi.'],
+    ['Pax Augusta', 'La pace interna che segue Azio: non assenza di guerre, ma fine delle guerre civili e stabilità dell’ordine sociale ed economico.'],
+    ['Principato', 'Il regime che nasce nel 27 a.C.: istituzioni repubblicane nella forma, potere personale e militare nella sostanza.'],
+    ['Sacrosanctitas', 'L’inviolabilità fisica del tribuno: chi lo tocca è consacrato agli dei e può essere ucciso impunemente. Augusto la ottiene con la tribunicia potestas.'],
+    ['Adozione testamentaria', 'L’adozione disposta per testamento: è così che Cesare inserisce Ottavio nella propria famiglia e nella propria eredità politica.']
+  ];
+  const glossEl = $('#gloss');
+  function renderGloss(q = '') {
+    const term = q.trim().toLowerCase();
+    glossEl.innerHTML = GLOSS.filter(g => !term || g[0].toLowerCase().includes(term) || g[1].toLowerCase().includes(term))
+      .map((g, idx) => `<details ${idx < 2 ? 'open' : ''}><summary>${g[0]}</summary><p>${g[1]}</p></details>`).join('');
+  }
+  renderGloss();
+  $('#gloss-filter').addEventListener('input', e => renderGloss(e.target.value));
+
+  /* Lightbox Universale per ogni immagine */
+  const lb = $('#lb'), lbImg = $('#lb-img'), lbCap = $('#lb-cap');
+  document.addEventListener('click', e => {
+    const trg = e.target.closest('[data-src]');
+    if (!trg) return;
+    lbImg.src = trg.dataset.src;
+    lbCap.textContent = trg.dataset.cap || '';
+    if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
+  });
+  $('#lb-close').onclick = () => lb.close();
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+
+  /* ==========================================================================
+     6. MOTORE VIDEO-TATTICO HTML5 CANVAS A 60FPS + WEBAUDIO + VOCE NARRANTE
+     ========================================================================== */
+  let audioCtx = null;
+  function playBattleSound(type) {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      if (type === 'horn') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(146.8, now);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.45);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
+        osc.start(now); osc.stop(now + 0.75);
+      } else if (type === 'clash') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(520 + Math.random() * 280, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.14);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        osc.start(now); osc.stop(now + 0.15);
+      }
+    } catch (_) {}
+  }
+
+  function speakText(txt, enabled) {
+    if (!enabled || !('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(txt);
+      u.lang = 'it-IT';
+      u.rate = 1.04;
+      window.speechSynthesis.speak(u);
+    } catch (_) {}
+  }
+
+  const BATTLES_DATA = {
+    modena: {
+      title: 'Battaglia di Mutina',
+      date: 'Aprile 43 a.C. · Emilia',
+      kind: 'land',
+      sideA: { name: 'Ottaviano · Irtio · Pansa', color: '#d94e3f', str: [100, 82, 85, 78] },
+      sideB: { name: 'Marco Antonio', color: '#9d7fe8', str: [100, 92, 68, 42] },
+      units: [
+        { id: 'ant', label: 'LEGIONI DI ANTONIO', side: 'B', type: 'legion', path: [[650, 210], [600, 250], [660, 220], [820, 120]], alpha: [1, 1, 1, 0.55] },
+        { id: 'amb', label: 'AGGUATO · II & XXXV', side: 'B', type: 'legion', path: [[700, 310], [460, 330], [520, 290], [790, 170]], alpha: [0.3, 1, 0.6, 0.2] },
+        { id: 'pan', label: 'CONSOLE PANSA', side: 'A', type: 'legion', path: [[160, 290], [320, 340], [340, 370], [350, 380]], alpha: [1, 1, 0.45, 0.3] },
+        { id: 'hir', label: 'CONSOLE IRTIO', side: 'A', type: 'legion', path: [[290, 380], [340, 380], [540, 260], [590, 230]], alpha: [1, 1, 1, 0.45] },
+        { id: 'oct', label: 'OTTAVIANO (RISERVA)', side: 'A', type: 'legion', path: [[190, 440], [240, 430], [460, 360], [600, 280]], alpha: [1, 1, 1, 1] }
+      ],
+      clashes: [
+        { phase: 1, x: 390, y: 335 },
+        { phase: 2, x: 580, y: 245 },
+        { phase: 3, x: 650, y: 205 }
+      ],
+      phases: [
+        { t: 'Fase 1 · L’assedio di Mutina', d: 'Antonio cinge d’assedio Mutina dove è bloccato Decimo Bruto. L’esercito senatorio avanza lungo la Via Aemilia.' },
+        { t: 'Fase 2 · L’agguato di Forum Gallorum', d: 'Nelle paludi di Forum Gallorum Antonio intercetta le reclute del console Pansa, che cade gravemente ferito.' },
+        { t: 'Fase 3 · Il contrattacco di Irtio e Ottaviano', d: 'Il console Irtio e Ottaviano lanciano le legioni veterane contro gli accampamenti di Antonio, spezzando l’assedio.' },
+        { t: 'Fase 4 · Due consoli morti, un solo vincitore', d: 'Irtio muore nello scontro, Pansa spira poco dopo: a 20 anni Ottaviano resta padrone unico dell’esercito consolare.' }
+      ]
+    },
+    filippi: {
+      title: 'Battaglia di Filippi',
+      date: 'Ottobre 42 a.C. · Macedonia',
+      kind: 'land',
+      sideA: { name: 'Triumviri (Antonio & Ottaviano)', color: '#d94e3f', str: [100, 86, 88, 92] },
+      sideB: { name: 'Cesaricidi (Bruto & Cassio)', color: '#9d7fe8', str: [100, 74, 48, 12] },
+      units: [
+        { id: 'bru', label: 'BRUTO (SETTORE NORD)', side: 'B', type: 'legion', path: [[710, 145], [530, 150], [670, 155], [730, 150]], alpha: [1, 1, 0.9, 0.2] },
+        { id: 'cas', label: 'CASSIO (SETTORE SUD)', side: 'B', type: 'legion', path: [[710, 385], [690, 390], [720, 400], [740, 410]], alpha: [1, 0.65, 0.15, 0.05] },
+        { id: 'ant', label: 'MARCO ANTONIO', side: 'A', type: 'legion', path: [[290, 395], [560, 390], [600, 340], [650, 210]], alpha: [1, 1, 1, 1] },
+        { id: 'oct', label: 'OTTAVIANO', side: 'A', type: 'legion', path: [[290, 155], [250, 165], [380, 165], [590, 165]], alpha: [1, 0.7, 0.9, 1] }
+      ],
+      clashes: [
+        { phase: 1, x: 625, y: 390 },
+        { phase: 1, x: 390, y: 155 },
+        { phase: 3, x: 660, y: 175 }
+      ],
+      phases: [
+        { t: 'Fase 1 · I bastioni sulla Via Egnatia', d: 'Bruto e Cassio presidiano le alture a est di Filippi, protetti a sud da una vasta palude impraticabile.' },
+        { t: 'Fase 2 · Primo scontro (3 ottobre)', d: 'Antonio costruisce un argine segreto nella palude e travolge il campo di Cassio; a nord Bruto respinge le linee di Ottaviano.' },
+        { t: 'Fase 3 · Il suicidio di Cassio', d: 'Credendo tutto perduto per un errore di ricognizione, Cassio si toglie la vita. Bruto resta solo al comando.' },
+        { t: 'Fase 4 · La disfatta finale (23 ottobre)', d: 'Accerchiato da Antonio e Ottaviano, l’esercito dei cesaricidi crolla. Bruto si suicida: Cesare è vendicato.' }
+      ]
+    },
+    azio: {
+      title: 'Battaglia Navale di Azio',
+      date: '2 Settembre 31 a.C. · Mar Ionio',
+      kind: 'sea',
+      sideA: { name: 'Flotta di Agrippa & Ottaviano (400)', color: '#d94e3f', str: [100, 96, 94, 92] },
+      sideB: { name: 'Flotta di Antonio & Cleopatra (230)', color: '#9d7fe8', str: [100, 88, 52, 15] },
+      units: [
+        { id: 'agrN', label: 'AGRIPPA · ALA NORD', side: 'A', type: 'fleet', count: 8, path: [[250, 160], [410, 150], [520, 165], [640, 195]], alpha: [1, 1, 1, 1] },
+        { id: 'agrC', label: 'L. ARRUNZIO · CENTRO', side: 'A', type: 'fleet', count: 8, path: [[230, 285], [370, 285], [450, 310], [590, 290]], alpha: [1, 1, 1, 1] },
+        { id: 'octS', label: 'OTTAVIANO · ALA SUD', side: 'A', type: 'fleet', count: 7, path: [[260, 410], [420, 410], [530, 395], [650, 365]], alpha: [1, 1, 1, 1] },
+        { id: 'antN', label: 'ANTONIO · QUINQUEREMI', side: 'B', type: 'fleet', count: 7, path: [[680, 195], [560, 165], [580, 180], [650, 210]], alpha: [1, 1, 0.65, 0.2] },
+        { id: 'antS', label: 'SOSIO · SQUADRA SUD', side: 'B', type: 'fleet', count: 7, path: [[680, 375], [570, 395], [590, 380], [660, 355]], alpha: [1, 1, 0.65, 0.2] },
+        { id: 'cleo', label: 'CLEOPATRA (60 NAVI)', side: 'B', type: 'cleo', count: 5, path: [[760, 285], [710, 285], [470, 260], [110, 465]], alpha: [1, 1, 1, 0.9] }
+      ],
+      clashes: [
+        { phase: 1, x: 490, y: 165 },
+        { phase: 1, x: 495, y: 400 },
+        { phase: 2, x: 545, y: 185 },
+        { phase: 2, x: 550, y: 380 },
+        { phase: 3, x: 635, y: 240 }
+      ],
+      phases: [
+        { t: 'Fase 1 · Lo schieramento davanti al Golfo', d: 'Antonio schiera le gigantesche quinqueremi all’uscita del Golfo di Ambracia; dietro attende la flotta egiziana di Cleopatra.' },
+        { t: 'Fase 2 · L’accerchiamento delle liburne di Agrippa', d: 'Agrippa allarga le ali per avvolgere i fianchi nemici: sciami di liburne bersagliano le lente corazzate di Antonio con dardi infuocati.' },
+        { t: 'Fase 3 · Il varco al centro e la fuga di Cleopatra', d: 'L’allargamento delle ali apre un varco al centro: Cleopatra spiega le vele purpuree e attraversa la battaglia verso l’Egitto.' },
+        { t: 'Fase 4 · Antonio abbandona la flotta', d: 'Antonio sale su una nave veloce e insegue Cleopatra. Priva di comandante, la grande flotta orientale brucia o si arrende a Ottaviano.' }
+      ]
+    }
+  };
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+  function buildBattlePlayer(slot) {
+    const key = slot.dataset.battle;
+    const cfg = BATTLES_DATA[key];
+    if (!cfg) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'tactical-player rv';
+    wrap.innerHTML = `
+      <div class="tp-header">
+        <div class="tp-title">
+          <span class="tp-rec"><i></i>SIMULAZIONE VIDEO 60FPS</span>
+          <h4>${cfg.title}</h4>
+        </div>
+        <span class="tp-meta">${cfg.date}</span>
+      </div>
+      <div class="tp-stage">
+        <canvas width="960" height="540"></canvas>
+        <div class="tp-hud">
+          <div class="tp-side">
+            <div class="tp-side-top"><span style="color:${cfg.sideA.color}">■ ${cfg.sideA.name}</span><b class="str-a">100%</b></div>
+            <div class="tp-bar"><i class="bar-a" style="background:${cfg.sideA.color}"></i></div>
+          </div>
+          <div class="tp-side">
+            <div class="tp-side-top"><span style="color:${cfg.sideB.color}">■ ${cfg.sideB.name}</span><b class="str-b">100%</b></div>
+            <div class="tp-bar"><i class="bar-b" style="background:${cfg.sideB.color}"></i></div>
+          </div>
+        </div>
+        <button type="button" class="tp-bigplay" aria-label="Avvia video battaglia">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="tp-subtitles">
+          <div class="tp-sub-box">
+            <b class="sub-t">${cfg.phases[0].t}</b>
+            <p class="sub-d">${cfg.phases[0].d}</p>
+          </div>
+        </div>
+      </div>
+      <div class="tp-controls">
+        <div class="tp-timeline" title="Trascina o clicca per saltare nel video">
+          <div class="tp-progress"></div>
+          <i class="tp-marker" style="left:25%"></i>
+          <i class="tp-marker" style="left:50%"></i>
+          <i class="tp-marker" style="left:75%"></i>
+        </div>
+        <div class="tp-bar-row">
+          <button type="button" class="tp-btn btn-play">▶ Play</button>
+          <span class="tp-time">00:00 / 00:32</span>
+          <button type="button" class="tp-btn btn-speed">1x</button>
+          <button type="button" class="tp-btn btn-sfx on" title="Effetti sonori di battaglia">🔊 Effetti</button>
+          <button type="button" class="tp-btn btn-voice" title="Telecronaca vocale in italiano">🎙️ Voce Narrante</button>
+          <div class="tp-phases">
+            ${cfg.phases.map((_, idx) => `<button type="button" class="tp-phase-btn ${idx === 0 ? 'active' : ''}" data-ph="${idx}">F${idx + 1}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    slot.replaceWith(wrap);
+
+    const cvs = $('canvas', wrap), ctx = cvs.getContext('2d');
+    const bigPlay = $('.tp-bigplay', wrap), playBtn = $('.btn-play', wrap);
+    const speedBtn = $('.btn-speed', wrap), sfxBtn = $('.btn-sfx', wrap), voiceBtn = $('.btn-voice', wrap);
+    const progBar = $('.tp-progress', wrap), timeline = $('.tp-timeline', wrap), timeEl = $('.tp-time', wrap);
+    const subT = $('.sub-t', wrap), subD = $('.sub-d', wrap);
+    const strA = $('.str-a', wrap), strB = $('.str-b', wrap), barA = $('.bar-a', wrap), barB = $('.bar-b', wrap);
+    const phBtns = $$('.tp-phase-btn', wrap);
+
+    const DURATION = 32; // 32 seconds total (8s per phase)
+    let currentTime = 0, playing = false, speed = 1, sfxOn = true, voiceOn = false;
+    let lastPhase = -1, lastTick = performance.now();
+    const particles = [];
+    const projectiles = [];
+
+    function syncUI() {
+      const pct = Math.min(100, (currentTime / DURATION) * 100);
+      progBar.style.width = pct + '%';
+      const s = Math.floor(currentTime);
+      timeEl.textContent = `00:${String(s).padStart(2, '0')} / 00:32`;
+
+      const pIdx = Math.min(3, Math.floor((currentTime / DURATION) * 4));
+      const localT = ((currentTime / DURATION) * 4) - pIdx;
+      if (pIdx !== lastPhase) {
+        lastPhase = pIdx;
+        subT.textContent = cfg.phases[pIdx].t;
+        subD.textContent = cfg.phases[pIdx].d;
+        phBtns.forEach((b, k) => b.classList.toggle('active', k === pIdx));
+        if (playing && sfxOn) playBattleSound('horn');
+        if (playing && voiceOn) speakText(cfg.phases[pIdx].t + '. ' + cfg.phases[pIdx].d, true);
+      }
+
+      const nextIdx = Math.min(3, pIdx + 1);
+      const valA = Math.round(lerp(cfg.sideA.str[pIdx], cfg.sideA.str[nextIdx], localT));
+      const valB = Math.round(lerp(cfg.sideB.str[pIdx], cfg.sideB.str[nextIdx], localT));
+      strA.textContent = valA + '%'; barA.style.width = valA + '%';
+      strB.textContent = valB + '%'; barB.style.width = valB + '%';
+
+      bigPlay.classList.toggle('playing', playing);
+      playBtn.textContent = playing ? '❙❙ Pausa' : '▶ Play';
+    }
+
+    function togglePlay() {
+      if (currentTime >= DURATION) currentTime = 0;
+      playing = !playing;
+      lastPhase = -1;
+      syncUI();
+    }
+
+    bigPlay.onclick = togglePlay;
+    $('.tp-stage', wrap).addEventListener('click', e => {
+      if (e.target === bigPlay || bigPlay.contains(e.target)) return;
+      togglePlay();
+    });
+    playBtn.onclick = togglePlay;
+    speedBtn.onclick = () => {
+      speed = speed === 1 ? 1.5 : speed === 1.5 ? 2 : 1;
+      speedBtn.textContent = speed + 'x';
+    };
+    sfxBtn.onclick = () => { sfxOn = !sfxOn; sfxBtn.classList.toggle('on', sfxOn); };
+    voiceBtn.onclick = () => {
+      voiceOn = !voiceOn;
+      voiceBtn.classList.toggle('on', voiceOn);
+      if (voiceOn) speakText(cfg.phases[Math.max(0, lastPhase)].d, true);
+      else if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    };
+    phBtns.forEach((b, idx) => {
+      b.onclick = () => {
+        currentTime = idx * 8 + 0.05;
+        lastPhase = -1;
+        syncUI();
+      };
+    });
+    timeline.addEventListener('click', e => {
+      const r = timeline.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      currentTime = ratio * DURATION;
+      lastPhase = -1;
+      syncUI();
+    });
+
+    function drawTerrain(tSec) {
+      if (cfg.kind === 'sea') {
+        const g = ctx.createLinearGradient(0, 0, 960, 540);
+        g.addColorStop(0, '#0b2530');
+        g.addColorStop(0.65, '#123847');
+        g.addColorStop(1, '#091c24');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, 960, 540);
+
+        // Animated waves
+        ctx.strokeStyle = 'rgba(130, 210, 230, 0.16)';
+        ctx.lineWidth = 1.5;
+        for (let y = 30; y < 520; y += 28) {
+          ctx.beginPath();
+          for (let x = 0; x <= 960; x += 24) {
+            const wy = y + Math.sin(x * 0.025 + tSec * 2.2 + y) * 3.5;
+            if (x === 0) ctx.moveTo(x, wy); else ctx.lineTo(x, wy);
+          }
+          ctx.stroke();
+        }
+
+        // Coastline of Actium & Ambracian Gulf
+        ctx.fillStyle = '#241e18';
+        ctx.strokeStyle = '#d4a338';
+        ctx.lineWidth = 2;
+        // North headland
+        ctx.beginPath();
+        ctx.moveTo(770, 0); ctx.lineTo(960, 0); ctx.lineTo(960, 205);
+        ctx.quadraticCurveTo(830, 215, 785, 175);
+        ctx.quadraticCurveTo(750, 120, 770, 0);
+        ctx.fill(); ctx.stroke();
+        // South headland (Promontory of Actium)
+        ctx.beginPath();
+        ctx.moveTo(785, 365);
+        ctx.quadraticCurveTo(840, 335, 960, 345);
+        ctx.lineTo(960, 540); ctx.lineTo(755, 540);
+        ctx.quadraticCurveTo(755, 430, 785, 365);
+        ctx.fill(); ctx.stroke();
+
+        ctx.fillStyle = 'rgba(240, 212, 138, 0.65)';
+        ctx.font = '600 11px "IBM Plex Mono", monospace';
+        ctx.fillText('GOLFO DI AMBRACIA', 805, 280);
+        ctx.fillText('PROMONTORIO DI AZIO', 790, 480);
+        ctx.fillText('MAR IONIO', 70, 495);
+      } else {
+        const g = ctx.createRadialGradient(480, 270, 50, 480, 270, 580);
+        g.addColorStop(0, '#231d17');
+        g.addColorStop(1, '#120f0c');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, 960, 540);
+
+        // Topographic contours
+        ctx.strokeStyle = 'rgba(212, 163, 56, 0.11)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 8; i++) {
+          const y = 60 + i * 58;
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.bezierCurveTo(260, y - 24, 580, y + 26, 960, y - 10);
+          ctx.stroke();
+        }
+
+        if (key === 'modena') {
+          // Via Aemilia
+          ctx.strokeStyle = 'rgba(212, 163, 56, 0.42)';
+          ctx.lineWidth = 4;
+          ctx.setLineDash([10, 6]);
+          ctx.beginPath(); ctx.moveTo(40, 470); ctx.lineTo(920, 180); ctx.stroke();
+          ctx.setLineDash([]);
+          // Mutina Fortress
+          ctx.fillStyle = 'rgba(212, 163, 56, 0.14)';
+          ctx.strokeStyle = '#f0d48a';
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(740, 125, 46, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#f6f1e7';
+          ctx.font = '700 12px "IBM Plex Mono", monospace';
+          ctx.fillText('MUTINA (ASSEDIO)', 682, 128);
+          ctx.fillStyle = 'rgba(212, 163, 56, 0.65)';
+          ctx.fillText('VIA AEMILIA', 440, 365);
+          ctx.fillText('PALUDI DI FORUM GALLORUM', 260, 495);
+        } else {
+          // Via Egnatia & Marshes of Philippi
+          ctx.strokeStyle = 'rgba(212, 163, 56, 0.42)';
+          ctx.lineWidth = 3.5;
+          ctx.setLineDash([9, 6]);
+          ctx.beginPath(); ctx.moveTo(40, 270); ctx.lineTo(920, 270); ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = 'rgba(75, 192, 200, 0.12)';
+          ctx.strokeStyle = 'rgba(75, 192, 200, 0.35)';
+          ctx.fillRect(360, 415, 340, 95);
+          ctx.strokeRect(360, 415, 340, 95);
+          ctx.fillStyle = 'rgba(212, 163, 56, 0.68)';
+          ctx.font = '600 11px "IBM Plex Mono", monospace';
+          ctx.fillText('VIA EGNATIA', 435, 258);
+          ctx.fillText('PALUDE DI FILIPPI', 475, 468);
+          ctx.fillText('ALTURE DI FILIPPI', 775, 95);
+        }
+      }
+    }
+
+    function drawUnit(u, x, y, angle, alpha, tSec) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.globalAlpha = alpha;
+      const col = u.side === 'A' ? cfg.sideA.color : (u.type === 'cleo' ? '#f0c44d' : cfg.sideB.color);
+
+      if (u.type === 'fleet' || u.type === 'cleo') {
+        const rows = 2, cols = Math.ceil(u.count / 2);
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const sx = (c - (cols - 1) / 2) * 32;
+            const sy = (r - 0.5) * 26 + Math.sin(tSec * 3 + c) * 2;
+            ctx.save();
+            ctx.translate(sx, sy);
+            ctx.rotate(angle);
+            // Water wake
+            ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+            ctx.lineWidth = 1.4;
+            ctx.beginPath();
+            ctx.moveTo(-14, 0); ctx.lineTo(-26, -5);
+            ctx.moveTo(-14, 0); ctx.lineTo(-26, 5);
+            ctx.stroke();
+            // Oars animated
+            const oarSwing = Math.sin(tSec * 9 + c) * 4;
+            ctx.strokeStyle = 'rgba(246, 241, 231, 0.65)';
+            ctx.lineWidth = 1;
+            for (let o = -8; o <= 8; o += 4) {
+              ctx.beginPath();
+              ctx.moveTo(o, -5); ctx.lineTo(o + oarSwing, -11);
+              ctx.moveTo(o, 5); ctx.lineTo(o + oarSwing, 11);
+              ctx.stroke();
+            }
+            // Ship hull
+            ctx.fillStyle = col;
+            ctx.strokeStyle = '#f6f1e7';
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(15, 0);
+            ctx.quadraticCurveTo(4, -7, -13, -5);
+            ctx.lineTo(-13, 5);
+            ctx.quadraticCurveTo(4, 7, 15, 0);
+            ctx.fill(); ctx.stroke();
+            ctx.restore();
+          }
+        }
+      } else {
+        // Legion block with animated maniples
+        ctx.fillStyle = 'rgba(12, 10, 8, 0.78)';
+        ctx.fillRect(-66, -24, 132, 48);
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 2.2;
+        ctx.strokeRect(-66, -24, 132, 48);
+
+        // Individual marching soldier dots inside legion
+        ctx.fillStyle = col;
+        for (let r = -14; r <= 14; r += 9) {
+          for (let c = -52; c <= 52; c += 13) {
+            const jx = Math.sin(tSec * 7 + r + c) * 1.4;
+            ctx.fillRect(c + jx - 2, r - 2, 4, 4);
+          }
+        }
+      }
+
+      // Unit Label Banner
+      ctx.fillStyle = 'rgba(12, 10, 8, 0.86)';
+      ctx.fillRect(-68, 28, 136, 17);
+      ctx.fillStyle = '#f6f1e7';
+      ctx.font = '600 9.5px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(u.label, 0, 40);
+      ctx.restore();
+    }
+
+    function renderFrame(now) {
+      const dt = Math.min(0.05, (now - lastTick) / 1000);
+      lastTick = now;
+      if (playing) {
+        currentTime += dt * speed;
+        if (currentTime >= DURATION) {
+          currentTime = DURATION;
+          playing = false;
+        }
+        syncUI();
+      }
+
+      const tNorm = (currentTime / DURATION) * 3; // 0..3 across 4 keyframes
+      const seg = Math.min(2, Math.floor(tNorm));
+      const frac = easeInOut(tNorm - seg);
+      const tSec = now / 1000;
+
+      ctx.clearRect(0, 0, 960, 540);
+      drawTerrain(tSec);
+
+      // Draw units & motion trails
+      cfg.units.forEach(u => {
+        const p0 = u.path[seg], p1 = u.path[seg + 1];
+        const x = lerp(p0[0], p1[0], frac);
+        const y = lerp(p0[1], p1[1], frac);
+        const al = lerp(u.alpha[seg], u.alpha[seg + 1], frac);
+        const ang = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+
+        // Dotted tactical movement vector
+        if (Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) > 15) {
+          ctx.save();
+          ctx.strokeStyle = u.side === 'A' ? 'rgba(217,78,63,0.45)' : 'rgba(157,127,232,0.45)';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([5, 5]);
+          ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(x, y); ctx.stroke();
+          ctx.restore();
+        }
+        drawUnit(u, x, y, ang, al, tSec);
+      });
+
+      // Spawn clash particles & flaming arrows during active phases
+      const curPhase = Math.min(3, Math.floor((currentTime / DURATION) * 4));
+      cfg.clashes.forEach(cl => {
+        if (cl.phase === curPhase) {
+          // Pulsing shockwave ring
+          const rad = 12 + ((tSec * 28) % 34);
+          ctx.save();
+          ctx.strokeStyle = `rgba(246, 207, 126, ${1 - rad / 46})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(cl.x, cl.y, rad, 0, Math.PI * 2); ctx.stroke();
+          ctx.restore();
+
+          if (Math.random() < 0.42) {
+            particles.push({
+              x: cl.x + (Math.random() - 0.5) * 40,
+              y: cl.y + (Math.random() - 0.5) * 40,
+              vx: (Math.random() - 0.5) * 90,
+              vy: (Math.random() - 0.5) * 90,
+              life: 0.5 + Math.random() * 0.4,
+              col: Math.random() > 0.4 ? '#ff9f43' : '#ff5252'
+            });
+            if (playing && sfxOn && Math.random() < 0.08) playBattleSound('clash');
+          }
+        }
+      });
+
+      // Flaming projectiles at Actium
+      if (cfg.kind === 'sea' && curPhase >= 1 && Math.random() < 0.25) {
+        projectiles.push({
+          x: 420 + Math.random() * 80,
+          y: 150 + Math.random() * 260,
+          vx: 110 + Math.random() * 60,
+          vy: (Math.random() - 0.5) * 50,
+          life: 0.9
+        });
+      }
+
+      for (let i = projectiles.length - 1; i >= 0; i--) {
+        const pr = projectiles[i];
+        pr.x += pr.vx * dt; pr.y += pr.vy * dt; pr.life -= dt;
+        ctx.fillStyle = '#ff6b35';
+        ctx.beginPath(); ctx.arc(pr.x, pr.y, 3, 0, Math.PI * 2); ctx.fill();
+        if (pr.life <= 0) projectiles.splice(i, 1);
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const pt = particles[i];
+        pt.x += pt.vx * dt; pt.y += pt.vy * dt; pt.life -= dt;
+        ctx.fillStyle = pt.col;
+        ctx.globalAlpha = Math.max(0, pt.life);
+        ctx.beginPath(); ctx.arc(pt.x, pt.y, 2.4, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 1;
+        if (pt.life <= 0) particles.splice(i, 1);
+      }
+
+      requestAnimationFrame(renderFrame);
+    }
+
+    syncUI();
+    requestAnimationFrame(renderFrame);
+  }
+
+  $$('.battle-slot').forEach(buildBattlePlayer);
+
+  /* ==========================================================================
+     7. GRAFICI SVG INTERATTIVI (GUERRE CIVILI, AZIO, ARCHITETTURA DEL POTERE)
+     ========================================================================== */
+  const NS = 'http://www.w3.org/2000/svg';
+  function sv(tag, attrs, parent) {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  }
+  function tx(parent, x, y, str, cls, anchor) {
+    const t = sv('text', { x, y, class: 'tx' + (cls ? ' ' + cls : ''), 'text-anchor': anchor || 'start' }, parent);
+    t.textContent = str;
+    return t;
+  }
+  function frame(host, w, h, label) {
+    host.innerHTML = '';
+    return sv('svg', { viewBox: `0 0 ${w} ${h}`, role: 'img', 'aria-label': label }, host);
+  }
+
+  /* 1 · Un secolo di guerre civili con card interattiva */
+  (function civilWars() {
+    const host = $('#chart-civil'), preview = $('#civil-preview');
+    if (!host || !preview) return;
+    const W = 1000, H = 240, x0 = 56, x1 = 944, AX = 178;
+    const D0 = -136, D1 = -25;
+    const X = y => x0 + (y - D0) / (D1 - D0) * (x1 - x0);
+    const svg = frame(host, W, H, 'Cronologia interattiva delle guerre civili romane dal 133 al 31 a.C.');
+
+    const EVENTS = [
+      [-133, 'Gracchi', '133 a.C. · Tiberio Gracco', 'L’assassinio del tribuno Tiberio Gracco inaugura la violenza politica armata nel cuore della Repubblica.', IMG.foro],
+      [-121, 'Gaio Gracco', '121 a.C. · Gaio Gracco', 'Il Senato usa per la prima volta il senatus consultum ultimum contro i riformatori popolari.', IMG.foro],
+      [-91, 'Guerra sociale', '91–88 a.C. · Guerra Sociale', 'Gli alleati italici insorgono in armi contro Roma per ottenere la piena cittadinanza.', IMG.arco],
+      [-88, 'Silla a Roma', '88 a.C. · Silla marcia su Roma', 'Per la prima volta nella storia un console guida le proprie legioni dentro il pomerio dell’Urbe.', IMG.foro],
+      [-82, 'Proscrizioni', '82 a.C. · Dittatura e Proscrizioni di Silla', 'Silla inaugura le liste di proscrizione: la caccia legalizzata agli avversari politici.', IMG.cicerone],
+      [-73, 'Spartaco', '73–71 a.C. · Rivolta di Spartaco', 'La grande guerra servile scuote la penisola e rafforza il peso politico dei comandanti militari.', IMG.prima],
+      [-63, 'Catilina', '63 a.C. · Congiura di Catilina', 'Mentre Cicerone sventa la congiura, il 23 settembre nasce sul Palatino Gaio Ottavio.', IMG.cicerone],
+      [-60, 'I triumvirato', '60 a.C. · Primo Triumvirato', 'Cesare, Pompeo e Crasso stringono un patto privato che svuota l’autorità del Senato.', IMG.cesare],
+      [-49, 'Rubicone', '49 a.C. · Cesare varca il Rubicone', 'Inizia la guerra civile tra Cesare e Pompeo su scala mediterranea.', IMG.cesare],
+      [-44, 'Idi di marzo', '15 Marzo 44 a.C. · Idi di Marzo', 'Cesare cade sotto 23 pugnalate: nel suo testamento adotta il diciannovenne Gaio Ottavio.', IMG.cesare],
+      [-43, 'Proscrizioni', '43 a.C. · Secondo Triumvirato', 'Ottaviano, Antonio e Lepido firmano la Lex Titia e avviano le proscrizioni in cui muore Cicerone.', IMG.cicerone],
+      [-42, 'Filippi', '42 a.C. · Battaglia di Filippi', 'Bruto e Cassio vengono sconfitti in Macedonia: finisce la causa dei cesaricidi.', IMG.denario],
+      [-31, 'Azio', '2 Settembre 31 a.C. · Vittoria di Azio', 'Ottaviano e Agrippa sconfiggono Antonio e Cleopatra: termina un secolo di guerre civili.', IMG.azio]
+    ];
+
+    function showEv(idx) {
+      const e = EVENTS[idx];
+      preview.innerHTML = `
+        <img src="${e[4]}" alt="${esc(e[2])}" data-src="${e[4]}" data-cap="${esc(e[2])}">
+        <div>
+          <span class="cp-yr">Nodo Storico · ${idx + 1} di ${EVENTS.length}</span>
+          <h5>${e[2]}</h5>
+          <p>${e[3]}</p>
+        </div>
+      `;
+    }
+
+    sv('rect', { x: X(-133), y: 42, width: X(-31) - X(-133), height: AX - 34, rx: 8, fill: 'rgba(158,42,43,0.06)' }, svg);
+    sv('line', { x1: x0, y1: AX, x2: x1, y2: AX, class: 'ax' }, svg);
+    [-130, -110, -90, -70, -50, -30].forEach(y => {
+      sv('line', { x1: X(y), y1: AX - 4, x2: X(y), y2: AX + 4, stroke: 'var(--line-2)' }, svg);
+      tx(svg, X(y), AX + 22, Math.abs(y) + ' a.C.', '', 'middle');
+    });
+
+    const rows = [68, 102, 136];
+    EVENTS.forEach((ev, i) => {
+      const [y, label] = ev;
+      const x = X(y), major = y === -44 || y === -31, ly = rows[i % 3];
+      const g = sv('g', { style: 'cursor:pointer' }, svg);
+      sv('line', { x1: x, y1: ly + 6, x2: x, y2: AX - 7, stroke: major ? 'var(--crimson)' : 'var(--gold)', 'stroke-width': major ? 2 : 1.2 }, g);
+      sv('circle', { cx: x, cy: AX, r: major ? 7 : 5, fill: major ? 'var(--crimson)' : 'var(--gold)' }, g);
+      tx(g, x, ly, label, major ? 'b' : '', y === -133 ? 'start' : 'middle');
+      g.addEventListener('click', () => showEv(i));
+      g.addEventListener('mouseenter', () => showEv(i));
+    });
+
+    tx(svg, x0, 26, 'CLICCA SUI NODI PER ESPLORARE IL SECOLO DI CRISI', 'g');
+    tx(svg, x1, 26, '31 a.C. · PAX AUGUSTA', 'g', 'end');
+    showEv(9); // Default on Ides of March
+  })();
+
+  /* 2 · Azio, forze in campo */
+  (function actiumChart() {
+    const host = $('#chart-actium');
+    if (!host) return;
+    const W = 1000, H = 250, x0 = 220, x1 = 900, MAX = 450;
+    const X = v => x0 + v / MAX * (x1 - x0);
+    const svg = frame(host, W, H, 'Confronto forze navali ad Azio');
+    [0, 100, 200, 300, 400].forEach(v => {
+      sv('line', { x1: X(v), y1: 44, x2: X(v), y2: 196, class: v === 0 ? 'ax' : 'gl' }, svg);
+      tx(svg, X(v), 34, v, '', 'middle');
+    });
+    const bars = [
+      ['Ottaviano · Agrippa', 'comando congiunto', '400 ca.', 'liburne leggere', 400, '#9e2a2b', 70],
+      ['Antonio · Cleopatra', 'squadra orientale', '230 ca.', 'quinqueremi pesanti', 230, '#5e3a6e', 146]
+    ];
+    bars.forEach(([name, role, val, sub, v, col, y]) => {
+      tx(svg, x0 - 16, y + 18, name.toUpperCase(), 'b', 'end');
+      tx(svg, x0 - 16, y + 34, role, '', 'end');
+      sv('rect', { x: X(0), y, width: X(v) - X(0), height: 40, rx: 6, fill: col, 'fill-opacity': '0.28', stroke: col, 'stroke-width': 2 }, svg);
+      tx(svg, X(v) + 14, y + 19, val, 'b');
+      tx(svg, X(v) + 14, y + 34, sub, '');
+    });
+    sv('rect', { x: X(0), y: 146, width: X(60) - X(0), height: 40, rx: 6, fill: '#c89632', 'fill-opacity': '0.45', stroke: '#a6761e', 'stroke-width': 1.5 }, svg);
+    tx(svg, X(30), 208, '↑ 60 navi egiziane di Cleopatra', 'g', 'middle');
+  })();
+
+  /* 3 · Architettura del potere */
+  (function powerChart() {
+    const host = $('#chart-power');
+    if (!host) return;
+    const W = 1000, H = 460;
+    const svg = frame(host, W, H, 'I poteri cumulati da Augusto dopo il 27 a.C.');
+    const bands = [
+      ['Imperium maius', '27 a.C., poi rinnovato', ['comando superiore su tutte le province', 'e su ogni esercito']],
+      ['Tribunicia potestas', '23 a.C., a vita', ['veto su magistrati e delibere,', 'inviolabilità della persona']],
+      ['Consolato', '31–23 a.C., poi ripetuto', ['guida dell’ordine senatorio', 'e delle elezioni']],
+      ['Princeps senatus', '28 a.C.', ['primo a parlare in Senato,', 'fissa l’ordine del giorno']],
+      ['Pontificato massimo', '12 a.C.', ['controllo della religione pubblica', 'e del calendario']],
+      ['Pater patriae', '2 a.C.', ['autorità morale su tutta', 'la comunità romana']]
+    ];
+    const top = 20, step = 62, bh = 46;
+    sv('line', { x1: 230, y1: top, x2: 230, y2: top + bands.length * step - 10, stroke: 'var(--crimson)', 'stroke-width': 2 }, svg);
+    bands.forEach(([name, date, effect], i) => {
+      const y = top + i * step;
+      sv('circle', { cx: 230, cy: y + bh / 2, r: 5, fill: 'var(--crimson)' }, svg);
+      sv('line', { x1: 230, y1: y + bh / 2, x2: 260, y2: y + bh / 2, stroke: 'var(--crimson)' }, svg);
+      tx(svg, 268, y + 18, name.toUpperCase(), 'b');
+      tx(svg, 268, y + 34, date, '');
+      sv('rect', { x: 470, y, width: 490, height: bh, rx: 8, fill: 'rgba(166,118,30,0.09)', stroke: 'var(--line-2)' }, svg);
+      tx(svg, 490, y + 28, effect.join(' '), '');
+    });
+    const by = top + bands.length * step + 6;
+    [['Province senatorie', 'governate dal Senato · nessuna legione', 268],
+     ['Province imperiali', 'legati di Augusto · oltre 20 legioni', 620]].forEach(([t, s, x]) => {
+      sv('rect', { x, y: by, width: 340, height: 52, rx: 10, fill: 'rgba(158,42,43,0.09)', stroke: 'var(--crimson)' }, svg);
+      tx(svg, x + 16, by + 21, t.toUpperCase(), 'b');
+      tx(svg, x + 16, by + 38, s, '');
+    });
+  })();
+
+  /* ==========================================================================
+     8. FLASHCARD ILLUSTRATE (16 CARTE) & QUIZ CON CELEBRAZIONE (8 DOMANDE)
+     ========================================================================== */
+  const CARDS = [
+    ['In che anno e in che città nasce Ottaviano?', 'Nasce a Roma il 23 settembre del 63 a.C., lo stesso anno del consolato di Cicerone e della congiura di Catilina.', IMG.cap],
+    ['Che cosa cambia con il testamento di Cesare?', 'Ottavio viene adottato post mortem e prende il nome di <em>Gaio Giulio Cesare Ottaviano</em>: eredita il nome, la clientela e la fedeltà delle legioni, non certo il potere.', IMG.cesare],
+    ['Quanto distribuisce alla plebe nel 44 a.C.?', '75 denari a testa a 250.000 persone, circa 18,75 milioni di denari: vende i beni di famiglia e si indebita.', IMG.denario],
+    ['Che carica assume illegalmente a 19 anni?', 'Il consolato, ottenuto marciando su Roma con otto legioni nell’agosto del 43 a.C.', IMG.foro],
+    ['Che cos’è il Secondo Triumvirato?', 'Un’alleanza a tre (Ottaviano, Antonio, Lepido) legittimata dalla <em>Lex Titia</em> del 43 a.C., con poteri dittatoriali per cinque anni.', IMG.antonio],
+    ['Quale battaglia vendica definitivamente Cesare?', 'Filippi, in Macedonia, nell’ottobre del 42 a.C.: Bruto e Cassio sono sconfitti e si uccidono.', IMG.prima],
+    ['Che cos’è la <em>coniuratio totius Italiae</em>?', 'Il giuramento di fedeltà a Ottaviano prestato nel 32 a.C. da Italia e province occidentali: una mobilitazione “spontanea” che aggira il Senato.', IMG.arco],
+    ['Contro chi dichiara guerra Roma nel 32 a.C.?', 'Contro Cleopatra, non contro Antonio: così Ottaviano evita di presentarsi come autore di una nuova guerra civile.', IMG.cleopatra],
+    ['Chi comanda davvero la flotta ad Azio?', 'Marco Vipsanio Agrippa: le sue liburne leggere e manovrabili batterono le pesanti quinqueremi di Antonio.', IMG.agrippa],
+    ['Perché l’Egitto non diventa una provincia normale?', 'Diventa proprietà personale del <em>princeps</em>, governata da un prefetto equestre: garantisce grano e un tesoro enorme, fuori dal controllo del Senato.', IMG.azio],
+    ['Che cosa fa Augusto nel gennaio del 27 a.C.?', 'La <em>restitutio rei publicae</em>: restituisce formalmente i poteri straordinari al Senato, che lo prega di restare e gli conferisce il titolo di <em>Augustus</em>.', IMG.arapacis],
+    ['Che cosa significa “Augustus”?', 'Deriva da <em>augere</em>, “accrescere”, e rimanda agli <em>auguria</em>: non è un titolo di potere ma un attributo sacrale di eccellenza.', IMG.cap],
+    ['Che poteri dà la <em>tribunicia potestas</em>?', 'Diritto di veto su ogni magistrato e sulle delibere, inviolabilità della persona, potere di convocare il popolo e il Senato.', IMG.arapacisFregio],
+    ['Perché non prende la dittatura?', 'Perché la dittatura a vita è ciò che ha fatto uccidere Cesare: il potere va esercitato senza mostrarne la forma monarchica.', IMG.cesare],
+    ['Che fine fa Cesarione?', 'Tolomeo XV Cesarione, figlio di Cesare e Cleopatra, viene eliminato nel 30 a.C.: nessun erede del vero Cesare può restare vivo.', IMG.cleopatra],
+    ['Chi succede ad Augusto?', 'Tiberio, nel 14 d.C.: il Principato si trasmette già come un’eredità familiare, anche senza una legge dinastica.', IMG.tiberio]
+  ];
+
+  (function initFlashcards() {
+    const card = $('#fc'), qEl = $('#fc-q'), aEl = $('#fc-a'), nEl = $('#fc-n'), n2El = $('#fc-n2');
+    const img1 = $('#fc-img1'), img2 = $('#fc-img2'), countEl = $('#fc-count'), pipsEl = $('#fc-pips');
+    let order = CARDS.map((_, i) => i), i = 0;
+    pipsEl.innerHTML = CARDS.map(() => '<i></i>').join('');
+    const pips = $$('i', pipsEl);
+    pips.forEach((p, idx) => p.addEventListener('click', () => { i = idx; paint(); }));
+
+    function paint() {
+      const c = CARDS[order[i]];
+      card.classList.remove('flip');
+      qEl.innerHTML = c[0];
+      aEl.innerHTML = c[1];
+      img1.src = c[2]; img2.src = c[2];
+      const label = 'Carta ' + String(i + 1).padStart(2, '0') + ' / ' + String(CARDS.length).padStart(2, '0');
+      nEl.textContent = label; n2El.textContent = label; countEl.textContent = label;
+      pips.forEach((p, k) => p.classList.toggle('on', k === i));
+    }
+    function go(step) { i = (i + step + CARDS.length) % CARDS.length; paint(); }
+    card.addEventListener('click', () => card.classList.toggle('flip'));
+    $('#fc-next').onclick = () => go(1);
+    $('#fc-prev').onclick = () => go(-1);
+    $('#fc-flip').onclick = () => card.classList.toggle('flip');
+    $('#fc-shuffle').onclick = () => {
+      for (let k = order.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [order[k], order[j]] = [order[j], order[k]];
+      }
+      i = 0; paint();
+    };
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT') return;
+      const r = card.getBoundingClientRect();
+      if (r.top >= innerHeight || r.bottom <= 0) return;
+      if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+      else if (e.key === ' ' && e.target === document.body) { card.classList.toggle('flip'); e.preventDefault(); }
+    });
+    paint();
+  })();
+
+  const QUIZ = [
+    ['Che cosa consiglia la famiglia a Ottaviano dopo la morte di Cesare?', ['Di rinunciare all’eredità e ritirarsi dalla politica', 'Di marciare subito su Roma', 'Di allearsi con Bruto e Cassio', 'Di vendere i beni di famiglia per comprare legioni'], 0, 'Madre e parenti temono i cesaricidi e Antonio: la prudenza suggerisce di rifiutare l’adozione. Ottaviano sceglie l’opposto.'],
+    ['Come finanzia il donativo di 75 denari a 250.000 plebei?', ['Con il tesoro di Cesare', 'Con i beni di famiglia e prestiti', 'Con le entrate dell’Egitto', 'Con le proscrizioni del 43 a.C.'], 1, 'Nel 44 a.C. l’Egitto non è ancora suo e le proscrizioni arrivano nel 43: vende proprietà familiari e si indebita.'],
+    ['Perché il Senato concede poteri militari a Ottaviano nel 43 a.C.?', ['Per premiare la sua vittoria sui Parti', 'Per usarlo contro Antonio, credendolo manovrabile', 'Perché era console in carica', 'Perché Cicerone lo aveva adottato'], 1, 'Il Senato spera di usare il “ragazzino” contro Antonio; dopo Modena Ottaviano resta con l’esercito consolare e si fa console con la forza.'],
+    ['Che cosa stabilisce la <em>Lex Titia</em> del 43 a.C.?', ['La fine delle proscrizioni', 'Il Secondo Triumvirato con poteri dittatoriali', 'La guerra contro Cleopatra', 'La restituzione dei poteri al Senato'], 1, 'La legge formalizza il triumvirato di Ottaviano, Antonio e Lepido per cinque anni.'],
+    ['Qual è la scelta strategica di Ottaviano nella spartizione del 42 a.C.?', ['L’Oriente ricco e urbanizzato', 'L’Africa granaria', 'L’Italia e l’Occidente', 'La Gallia transalpina'], 2, 'Antonio prende l’Oriente; Ottaviano prende Italia e Occidente, cioè il cuore politico e la base di reclutamento.'],
+    ['Che cosa dichiara ufficialmente Roma nel 32 a.C.?', ['Guerra ad Antonio', 'Guerra a Cleopatra', 'Guerra ai Parti', 'Nulla: è un conflitto privato'], 1, 'La dichiarazione di guerra contro Cleopatra evita l’accusa di nuova guerra civile e trasforma il conflitto in guerra nazionale.'],
+    ['Che cosa comporta la <em>restitutio rei publicae</em> del 27 a.C.?', ['La fine del triumvirato e il ritorno delle elezioni libere', 'La restituzione formale dei poteri, seguita da un conferimento più ampio e permanente', 'La rinuncia definitiva alla politica', 'La divisione dell’impero con il Senato'], 1, 'Il gesto è teatrale: il Senato lo supplica di restare e gli dà il titolo di Augustus con l’imperium su tutte le province.'],
+    ['Che cosa NON fa parte dei poteri di Augusto?', ['L’imperium maius sulle province', 'La tribunicia potestas', 'Il pontificato massimo', 'La dittatura a vita'], 3, 'Augusto rifiuta esplicitamente la dittatura: cumula invece poteri magistratuali rinnovabili, senza il nomen di monarca.']
+  ];
+
+  (function initQuiz() {
+    const box = $('#quiz-box');
+    if (!box) return;
+    let answered = 0, correct = 0;
+    box.innerHTML = QUIZ.map((q, qi) =>
+      `<div class="q-block" data-q="${qi}">
+        <h4><span>${String(qi + 1).padStart(2, '0')}</span>${q[0]}</h4>
+        <div class="opts">${q[1].map((o, oi) =>
+          `<button type="button" class="opt" data-o="${oi}"><i>${String.fromCharCode(65 + oi)}</i><span>${o}</span><span class="mk"></span></button>`
+        ).join('')}</div>
+        <p class="exp">${q[3]}</p>
+      </div>`
+    ).join('') +
+    `<div class="quiz-foot">
+      <span class="score" id="q-score">0 / 8 corrette</span>
+      <div class="bar"><i id="q-bar"></i></div>
+      <button class="btn ghost" id="q-reset" type="button">Ricomincia</button>
+    </div>`;
+
+    const scoreEl = $('#q-score'), barEl = $('#q-bar');
+    function update() {
+      scoreEl.innerHTML = `<b>${correct}</b> / ${QUIZ.length} corrette · ${answered} risposte`;
+      barEl.style.width = (correct / QUIZ.length * 100) + '%';
+    }
+    box.addEventListener('click', e => {
+      const btn = e.target.closest('.opt');
+      if (!btn || btn.classList.contains('done')) return;
+      const block = btn.closest('.q-block');
+      const qi = +block.dataset.q, oi = +btn.dataset.o, right = QUIZ[qi][2];
+      $$('.opt', block).forEach(b => {
+        b.classList.add('done');
+        if (+b.dataset.o === right) { b.classList.add('ok'); $('.mk', b).textContent = '✓ corretta'; }
+      });
+      if (oi !== right) { btn.classList.add('no'); $('.mk', btn).textContent = '✗ scelta'; }
+      else playBattleSound('horn');
+      $('.exp', block).classList.add('show');
+      answered++;
+      if (oi === right) correct++;
+      update();
+    });
+    $('#q-reset').onclick = () => {
+      answered = 0; correct = 0;
+      $$('.q-block', box).forEach(block => {
+        $$('.opt', block).forEach(b => { b.classList.remove('done', 'ok', 'no'); $('.mk', b).textContent = ''; });
+        $('.exp', block).classList.remove('show');
+      });
+      update();
+    };
+    update();
+  })();
+
+  /* ==========================================================================
+     9. NAVIGAZIONE, REVEAL, CONTATORI ANIMATI & DYNAMIC MOOD MORPHING
+     ========================================================================== */
+  const NAV = [
+    ['scheda', 'Il contesto'], ['storia', 'La storia'], ['numeri', 'I numeri'],
+    ['monete', 'Monete 3D'], ['galleria', 'Immagini'], ['persone', 'Protagonisti'],
+    ['flashcard', 'Flashcard'], ['quiz', 'Quiz'], ['lessico', 'Lessico']
+  ];
+  const navEl = $('#nv');
+  navEl.innerHTML = NAV.map(n => `<a href="#${n[0]}">${n[1]}</a>`).join('');
+  const navLinks = $$('a', navEl);
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    $$('.rv').forEach(el => io.observe(el));
+
+    // Animated Number Counters
+    const countIO = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count;
+      if (!target || isNaN(target)) return;
+      countIO.unobserve(el);
+      const dur = 1100, start = performance.now();
+      const suffix = el.dataset.suffix || '';
+      const useDot = el.dataset.fmt === 'dot';
+      function step(now) {
+        const p = Math.min(1, (now - start) / dur);
+        const val = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        el.innerHTML = (useDot ? val.toLocaleString('it-IT') : val) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }), { threshold: 0.5 });
+    $$('[data-count]').forEach(el => countIO.observe(el));
+
+    // Dynamic Ambient Mood Morphing across chapters
+    const auraIO = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && e.target.dataset.aura1) {
+        document.documentElement.style.setProperty('--aura-1', e.target.dataset.aura1);
+        document.documentElement.style.setProperty('--aura-2', e.target.dataset.aura2);
+      }
+    }), { threshold: 0.25 });
+    $$('.ch').forEach(ch => auraIO.observe(ch));
+  } else {
+    $$('.rv').forEach(el => el.classList.add('in'));
+  }
+
+  const prog = $('#prog');
+  const sections = NAV.map(n => document.getElementById(n[0])).filter(Boolean);
+  function onScroll() {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = Math.min(100, Math.max(0, (scrollY / (h || 1)) * 100)) + '%';
+    let cur = null;
+    sections.forEach(s => { if (s.getBoundingClientRect().top <= innerHeight * 0.36) cur = s.id; });
+    navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  bindImageFallbacks();
+})();
+</script>
+</body>
+</html>
